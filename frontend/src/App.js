@@ -1,8 +1,8 @@
-import './App.css';
+import Link from "react-dom";
 
 function App() {
   return (
-    <div>Test</div>
+    <div>Hello</div>
   );
 }
 
