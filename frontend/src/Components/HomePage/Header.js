@@ -16,7 +16,12 @@ const Header = () => {
         <StyledHeader>
             <StyledTitle>Parking Lot Manager</StyledTitle>
             <ButtonContainer>
-                <StyledButton onClick={() => handleClick()}>Sign In</StyledButton>
+                <StyledButton onClick={(e) => {
+                    e.preventDefault();
+                    handleClick();
+                }}>
+                    Sign In
+                </StyledButton>
             </ButtonContainer>
         </StyledHeader>
     )

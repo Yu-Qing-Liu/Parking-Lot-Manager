@@ -2,69 +2,84 @@ import { Dialog } from "@mui/material";
 import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-const SignInModal = () => {
+const RegistrationModal = () => {
 
     let history = useHistory();
 
     const {
-        state:{DisplaySignInModal},
-        actions:{CloseSignInModal,ShowRegistrationModal,ShowErrorModal},
+        state:{DisplayRegistrationModal},
+        actions:{CloseRegistrationModal,ShowSignInModal,ShowErrorModal},
     } = useContext(ModalStateContext);
 
     return(
         <Dialog
-        open = {DisplaySignInModal}
-        onClose = {() => CloseSignInModal()}
+        open = {DisplayRegistrationModal}
+        onClose = {() => CloseRegistrationModal()}
         >
             <Wrapper>
                 <Container>
-                    <StyledTitle>Sign In</StyledTitle>
+                    <StyledTitle>Create An Account</StyledTitle>
                     <InputContainer>
-                        <StyledLabel id={"signInUsername"}>Username</StyledLabel>
-                        <StyledInput></StyledInput>
+                        <StyledLabel>Username</StyledLabel>
+                        <StyledInput id={"username"}></StyledInput>
                     </InputContainer>
                     <InputContainer>
-                        <StyledLabel id={"signInPassword"}>Password</StyledLabel>
-                        <StyledInput></StyledInput>
+                        <StyledLabel>Password</StyledLabel>
+                        <StyledInput id={"password"}></StyledInput>
                     </InputContainer>
-                    <StyledButton0 onClick={(e) => {
+                    <InputContainer>
+                        <StyledLabel>Email</StyledLabel>
+                        <StyledInput id={"email"}></StyledInput>
+                    </InputContainer>
+                    <InputContainer>
+                        <StyledLabel>Address</StyledLabel>
+                        <StyledInput id={"address"}></StyledInput>
+                    </InputContainer>
+                    <InputContainer>
+                        <StyledLabel>Phone Number</StyledLabel>
+                        <StyledInput id={"phone"}></StyledInput>
+                    </InputContainer>
+                    <Styledp></Styledp>
+                    <ButtonContainer>
+                        <StyledButton0 onClick={(e) => {
                             e.preventDefault();
-                            fetch('/signIn', {
-                                method: 'GET',
+                            fetch('/createUser', {
+                                method: 'POST',
                                 headers: {
                                     Accept: "application/json",
                                     'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                    Username: document.getElementById("signInUsername").value,
-                                    Password: document.getElementById("signInPassword").value,
+                                    Username: document.getElementById("username").value,
+                                    Password: document.getElementById("password").value,
+                                    Email: document.getElementById("email").value,
+                                    Address: document.getElementById("address").value,
+                                    PhoneNumber: document.getElementById("phone").value
                                 })
                             })
-                            .then(res => res.json())
-                            .then((response) => {
-                                CloseSignInModal();
+                            .then(res => res.json())
+                            .then((response) => {
+                                CloseRegistrationModal();
                                 history.push(`/User/${response.data.UserId}`);
                             })
-                            .catch((err) => {
+                            .catch((err) => {
                                 ShowErrorModal(err);
                             })
                         }}>
-                        Sign In
-                    </StyledButton0>
-                    <Styledp>Don't Have An Account?</Styledp>
-                    <ButtonContainer>
+                        Create
+                        </StyledButton0>
                         <StyledButton onClick={(e) => {
                             e.preventDefault();
-                            CloseSignInModal();
-                            ShowRegistrationModal();
+                            CloseRegistrationModal();
+                            ShowSignInModal();
                         }}>
-                        Create An Account
+                        Sign In
                         </StyledButton>
                         <StyledButton2 onClick={(e) => {
                             e.preventDefault();
-                            CloseSignInModal();
+                            CloseRegistrationModal();
                         }}>
                             Cancel
                         </StyledButton2>
@@ -84,8 +99,8 @@ const StyledTitle = styled.h1`
 `
 
 const Wrapper = styled.div`
-    width: 25vw;
-    height: 60vh;
+    width: 30vw;
+    height: 70vh;
 `
 
 const Container = styled.form`
@@ -96,12 +111,12 @@ const Container = styled.form`
 `
 
 const StyledLabel = styled.label`
-    font-size: xx-large;
+    font-size: large;
 `
 
 const StyledInput = styled.input`
-    padding-right: 6vw;
-    font-size:x-large;
+    padding-right: 7vw;
+    font-size:large;
     margin-top:1vh;
 `
 
@@ -140,7 +155,6 @@ const StyledButton2 = styled.button`
 `
 
 const StyledButton0 = styled.button`
-    margin-top:3vh;
     border-width: 0px;
     padding:1.5vh 2vw 1.5vh 2vw;
     background-color: green;
@@ -155,7 +169,7 @@ const ButtonContainer = styled.div`
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    width:21vw;
+    width:26vw;
 `
 
-export default SignInModal;
+export default RegistrationModal;

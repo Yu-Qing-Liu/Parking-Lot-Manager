@@ -5,6 +5,8 @@ export const ModalStateContext = createContext();
 const initialState = {
     DisplaySignInModal:false,
     DisplayRegistrationModal:false,
+    DisplayErrorModal:false,
+    ErrorModalContent:null,
 }
 
 const reducer = (state, action) => {
@@ -33,6 +35,20 @@ const reducer = (state, action) => {
                 DisplayRegistrationModal:false,
             }
         }
+        case 'show-error-modal': {
+            return {
+                ...state,
+                DisplayErrorModal:true,
+                ErrorModalContent:action,
+            }
+        }
+        case 'close-error-modal': {
+            return {
+                ...state,
+                DisplayErrorModal:false,
+                ErrorModalContent:null,
+            }
+        }
     }
 }
 
@@ -58,6 +74,17 @@ export const ModalStateContextProvider = ({children}) => {
             type: 'close-registration-modal',
         });
     }
+    const ShowErrorModal = (data) => {
+        dispatch({
+            type: 'show-error-modal',
+            ...data,
+        });
+    }
+    const CloseErrorModal = () => {
+        dispatch({
+            type: 'close-error-modal',
+        });
+    }
 
     return(
         <ModalStateContext.Provider
@@ -69,6 +96,8 @@ export const ModalStateContextProvider = ({children}) => {
                     CloseSignInModal,
                     ShowRegistrationModal,
                     CloseRegistrationModal,
+                    ShowErrorModal,
+                    CloseErrorModal
                 },
             }}
         >

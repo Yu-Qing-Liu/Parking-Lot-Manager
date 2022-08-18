@@ -3,6 +3,8 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import Map from "react-map-gl";
 import SignInModal from "../Modals/SignInModal";
+import RegistrationModal from "../Modals/RegistrationModal";
+import ErrorModal from "../Modals/ErrorModal";
 
 
 const TOKEN = "fetch-token";
@@ -12,6 +14,8 @@ const HomePage = () => {
     return(
         <>
             <SignInModal></SignInModal>
+            <RegistrationModal></RegistrationModal>
+            <ErrorModal></ErrorModal>
             <Header/>
             <SideBar></SideBar>
             <MapContainer>
