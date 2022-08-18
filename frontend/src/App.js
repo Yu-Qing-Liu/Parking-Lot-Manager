@@ -1,8 +1,18 @@
-import Link from "react-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import HomePage from "./Components/HomePage/HomePage";
+import { ModalStateContextProvider } from "./ModalStateContext";
 
-function App() {
+const App = () => {
   return (
-    <div>Hello</div>
+    <BrowserRouter>
+      <ModalStateContextProvider>
+        <Switch>
+          <Route exact path="/">
+            <HomePage></HomePage>
+          </Route>
+        </Switch>
+      </ModalStateContextProvider>
+    </BrowserRouter>
   );
 }
 
