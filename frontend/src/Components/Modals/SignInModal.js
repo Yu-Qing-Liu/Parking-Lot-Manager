@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from 'react';
 import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import { useHistory } from 'react-router-dom';
 
 const SignInModal = () => {
+
+    let history = useHistory();
 
     const {
         state:{DisplaySignInModal},
@@ -23,11 +26,12 @@ const SignInModal = () => {
                     let email = document.getElementById("signInEmail").value;
                     let password = document.getElementById("signInPassword").value;
                     signInWithEmailAndPassword(auth,email,password)
-                    .then((userCredentials) => {
+                    .then((userCredentials) => {
                         CloseSignInModal();
+                        history.push(`/profile/${userCredentials.user.uid}`);
                     })
                     .catch((err) => {
-                        console.log(err);
+                        ShowErrorModal({data:"Sorry This Account does not exist"});
                     })
                 }}>
                     <StyledTitle>Sign In</StyledTitle>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { ModalStateContext } from "../../ModalStateContext";
+import { ModalStateContext } from "./ModalStateContext";
 import { useContext } from "react";
-import {GlobalStates} from "../../GlobalStates";
+import {GlobalStates} from "./GlobalStates";
 import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -35,6 +35,7 @@ const Header = () => {
                     <>
                         <StyledEmail>{`Currently Signed in as: ${currentUserData.data.email}`}</StyledEmail>
                         <StyledLink to={`/profile/${currentUserData.data.uid}`}>Profile</StyledLink>
+                        <StyledLink1 to={"/"}>Home</StyledLink1>
                         <StyledButton onClick={(e) => {
                             e.preventDefault();
                             const auth = getAuth();
@@ -61,7 +62,7 @@ const StyledHeader = styled.header`
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #64b5f6;
+    background-color: #bbdefb;
 `
 
 const StyledTitle = styled.h1`
@@ -91,7 +92,7 @@ const StyledButton = styled.button`
 
 const StyledEmail = styled.div`
     border-width: 0px;
-    background-color: #2196f3;
+    background-color: #64b5f6;
     padding-left: 1vw;
     padding-right: 1vw;
     color:white;
@@ -103,6 +104,19 @@ const StyledEmail = styled.div`
 
 const StyledLink = styled(Link)`
     border-width: 0px;
+    background-color: #2196f3;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    color:white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+`
+
+const StyledLink1 = styled(Link)`
+    border-width: 0px;
     background-color: #1976d2;
     padding-left: 1vw;
     padding-right: 1vw;
@@ -111,6 +125,7 @@ const StyledLink = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 `
 
 export default Header;

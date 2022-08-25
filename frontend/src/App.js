@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
-import Header from "./Components/HomePage/Header";
+import Header from "./Header";
 import ProfilePage from "./Pages/ProfilePage";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
