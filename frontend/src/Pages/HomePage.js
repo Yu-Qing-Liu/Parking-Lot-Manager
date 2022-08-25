@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import Header from "./Header";
-import SideBar from "./SideBar";
+import SideBar from "../Components/HomePage/SideBar";
 import Map from "react-map-gl";
-import SignInModal from "../Modals/SignInModal";
-import RegistrationModal from "../Modals/RegistrationModal";
-import ErrorModal from "../Modals/ErrorModal";
-
+import SignInModal from "../Components/Modals/SignInModal";
+import RegistrationModal from "../Components/Modals/RegistrationModal";
+import ErrorModal from "../Components/Modals/ErrorModal";
 
 const TOKEN = "fetch-token";
 
@@ -16,7 +14,6 @@ const HomePage = () => {
             <SignInModal></SignInModal>
             <RegistrationModal></RegistrationModal>
             <ErrorModal></ErrorModal>
-            <Header/>
             <SideBar></SideBar>
             <MapContainer>
                 {

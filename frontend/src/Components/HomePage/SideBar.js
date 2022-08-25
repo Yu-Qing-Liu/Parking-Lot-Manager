@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {BsSearch} from "react-icons/bs"
 
 const SideBar = () => {
 
@@ -6,7 +7,8 @@ const SideBar = () => {
         <StyledSideBar>
             <Container>
                 <StyledLabel>Search For A Location</StyledLabel>
-                <StyledInput></StyledInput>
+                <StyledBsSearch></StyledBsSearch>
+                <StyledInput placeholder={"Enter a location"}></StyledInput>
             </Container>
             <Container>
                 <StyledLabel>Filter Results Within A Certain Range</StyledLabel>
@@ -31,31 +33,27 @@ const StyledSideBar = styled.div`
     flex-direction: column;
     max-width: 20vw;
     height:95vh;
-    border-right-style:solid;
-    border-right-width:2px;
-    border-right-color:#0d47a1;
-    border-top-style:solid;
-    border-top-width:2px;
-    border-top-color:#0d47a1;
-    background-color: #b3e5fc;
+    box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.2);
 `
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding:1.5vh;
-    border-bottom-style:solid;
-    border-bottom-width:2px;
-    border-bottom-color:#0d47a1;
-    background-color: #b3e5fc;
 `
 
 const StyledLabel = styled.label`
-    margin:0.5vh;
     font-weight: bold;
     font-size: large;
     color:#0d47a1;
+    margin-left: 0.5vw;
+    margin-top: 2vh;
+`
+
+const StyledBsSearch = styled(BsSearch)`
+    position: relative;
+    top:1.25vw;
+    left: 17.2vw;
 `
 
 const StyledLabel2 = styled.label`
@@ -63,10 +61,17 @@ const StyledLabel2 = styled.label`
 `
 
 const StyledInput = styled.input`
-    margin:0.5vh;
-    padding-right: 2.9vw;
-    border-color:#0d47a1;
+    margin-left: 1vw;
+    border-width: 0;
     font-size: x-large;
+    color:grey;
+    -webkit-box-shadow: 1px 1px 2px 0px #000000; 
+    box-shadow: 1px 1px 2px 0px #000000;
+    position: relative;
+    width: 17.5vw;
+    height: 4vh;
+    background-color: transparent;
+    top:-0.5vh;
 `
 
 const RadioButtonContainer = styled.div`
@@ -75,6 +80,7 @@ const RadioButtonContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin:0.5vh;
+    margin-left: 1vw;
 `
 
 const StyledRadioButton = styled.input`

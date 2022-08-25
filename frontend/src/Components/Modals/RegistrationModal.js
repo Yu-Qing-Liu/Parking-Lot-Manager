@@ -19,55 +19,56 @@ const RegistrationModal = () => {
         onClose = {() => CloseRegistrationModal()}
         >
             <Wrapper>
-                <Container>
+                <Container onSubmit= {(e) => {
+                        e.preventDefault();
+                        fetch('/createUser', {
+                            method: 'POST',
+                            headers: {
+                                Accept: "application/json",
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                Address: document.getElementById("address").value,
+                                PhoneNumber: document.getElementById("phone").value,
+                                Email: document.getElementById("email").value,
+                                Password: document.getElementById("password").value,
+                                ConfirmPassword: document.getElementById("ConfirmPassword").value
+                            })
+                        })
+                        .then(res => res.json())
+                        .then((response) => {
+                            CloseRegistrationModal();
+                            history.push(`/User/${response.data.UserId}`);
+                        })
+                        .catch((err) => {
+                            ShowErrorModal(err);
+                        })
+                    }}
+                    >
                     <StyledTitle>Create An Account</StyledTitle>
                     <InputContainer>
-                        <StyledLabel>Username</StyledLabel>
-                        <StyledInput id={"username"}></StyledInput>
-                    </InputContainer>
-                    <InputContainer>
-                        <StyledLabel>Password</StyledLabel>
-                        <StyledInput id={"password"}></StyledInput>
-                    </InputContainer>
-                    <InputContainer>
-                        <StyledLabel>Email</StyledLabel>
-                        <StyledInput id={"email"}></StyledInput>
-                    </InputContainer>
-                    <InputContainer>
                         <StyledLabel>Address</StyledLabel>
-                        <StyledInput id={"address"}></StyledInput>
+                        <StyledInput id={"address"} placeholder="Address" required></StyledInput>
                     </InputContainer>
                     <InputContainer>
                         <StyledLabel>Phone Number</StyledLabel>
-                        <StyledInput id={"phone"}></StyledInput>
+                        <StyledInput type={"tel"} id={"phone"} placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required></StyledInput>
+                    </InputContainer>
+                    <InputContainer>
+                        <StyledLabel>Email</StyledLabel>
+                        <StyledInput type={"email"} id={"email"} placeholder="Email" required></StyledInput>
+                    </InputContainer>
+                    <InputContainer>
+                        <StyledLabel>Password</StyledLabel>
+                        <StyledInput id={"password"} placeholder="Password" required></StyledInput>
+                    </InputContainer>
+                    <InputContainer>
+                        <StyledLabel>Confirm Password</StyledLabel>
+                        <StyledInput type={"password"} id={"ConfirmPassword"} placeholder="Confirm password" required></StyledInput>
                     </InputContainer>
                     <Styledp></Styledp>
                     <ButtonContainer>
-                        <StyledButton0 onClick={(e) => {
-                            e.preventDefault();
-                            fetch('/createUser', {
-                                method: 'POST',
-                                headers: {
-                                    Accept: "application/json",
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    Username: document.getElementById("username").value,
-                                    Password: document.getElementById("password").value,
-                                    Email: document.getElementById("email").value,
-                                    Address: document.getElementById("address").value,
-                                    PhoneNumber: document.getElementById("phone").value
-                                })
-                            })
-                            .then(res => res.json())
-                            .then((response) => {
-                                CloseRegistrationModal();
-                                history.push(`/User/${response.data.UserId}`);
-                            })
-                            .catch((err) => {
-                                ShowErrorModal(err);
-                            })
-                        }}>
+                        <StyledButton0 type={"submit"}>
                         Create
                         </StyledButton0>
                         <StyledButton onClick={(e) => {
@@ -115,9 +116,12 @@ const StyledLabel = styled.label`
 `
 
 const StyledInput = styled.input`
-    padding-right: 7vw;
-    font-size:large;
+    -webkit-box-shadow: 0px 0px 3px 1px #B4B4B4; 
+    box-shadow: 0px 0px 3px 1px #B4B4B4;
+    border-width: 0;
+    font-size: large;
     margin-top:1vh;
+    width: 18vw;
 `
 
 const InputContainer = styled.div`

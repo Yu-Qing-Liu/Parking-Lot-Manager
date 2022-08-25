@@ -1,29 +1,32 @@
 "use strict";
 
 const express = require('express');
-const morgan = require("morgan")
+const morgan = require("morgan");
+const app = express();
 
-const {} = require("./handlers");
+const {
+    createUser
+} = require("./Handlers/AuthentificationHandlers");
 
-express()
-
-.use(morgan("tiny"))
-.use(express.json())
-.use(express.static("public"))
+app.use(morgan("tiny"))
+app.use(express.json())
+app.use(express.static("public"))
 
 /*------------------------*/
 /*↓↓↓ Endpoints ↓↓↓*/ 
 
+//Login And Authentification endpoints
+app.post("/createUser", createUser)
 
 
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/
-.get("*", (req,res) => {
+app.get("*", (req,res) => {
     res.status(404).json({
         status:404,
         message: "This is obviously not what you are looking for",
     });
 })
 
-.listen(8000);
+app.listen(8000);

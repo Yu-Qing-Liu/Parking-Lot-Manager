@@ -2,11 +2,10 @@ import { Dialog } from "@mui/material";
 import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {GlobalStates} from "../../GlobalStates";
 
 const SignInModal = () => {
-
-    let history = useHistory();
 
     const {
         state:{DisplaySignInModal},
@@ -19,38 +18,31 @@ const SignInModal = () => {
         onClose = {() => CloseSignInModal()}
         >
             <Wrapper>
-                <Container>
+                <Container onSubmit={(e) => {
+                    e.preventDefault();
+                    const auth = getAuth();
+                    let email = document.getElementById("signInEmail").value;
+                    let password = document.getElementById("signInPassword").value;
+                    console.log(email);
+                    console.log(password);
+                    signInWithEmailAndPassword(auth,email,password)
+                    .then((userCredentials) => {
+                        CloseSignInModal();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+                }}>
                     <StyledTitle>Sign In</StyledTitle>
                     <InputContainer>
-                        <StyledLabel id={"signInUsername"}>Username</StyledLabel>
-                        <StyledInput></StyledInput>
+                        <StyledLabel>Email</StyledLabel>
+                        <StyledInput id={"signInEmail"} placeholder={"Email"}></StyledInput>
                     </InputContainer>
                     <InputContainer>
-                        <StyledLabel id={"signInPassword"}>Password</StyledLabel>
-                        <StyledInput></StyledInput>
+                        <StyledLabel>Password</StyledLabel>
+                        <StyledInput id={"signInPassword"} type={"password"} placeholder={"Password"}></StyledInput>
                     </InputContainer>
-                    <StyledButton0 onClick={(e) => {
-                            e.preventDefault();
-                            fetch('/signIn', {
-                                method: 'GET',
-                                headers: {
-                                    Accept: "application/json",
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    Username: document.getElementById("signInUsername").value,
-                                    Password: document.getElementById("signInPassword").value,
-                                })
-                            })
-                            .then(res => res.json())
-                            .then((response) => {
-                                CloseSignInModal();
-                                history.push(`/User/${response.data.UserId}`);
-                            })
-                            .catch((err) => {
-                                ShowErrorModal(err);
-                            })
-                        }}>
+                    <StyledButton0 type="submit">
                         Sign In
                     </StyledButton0>
                     <Styledp>Don't Have An Account?</Styledp>
@@ -85,7 +77,7 @@ const StyledTitle = styled.h1`
 
 const Wrapper = styled.div`
     width: 25vw;
-    height: 60vh;
+    height: 54vh;
 `
 
 const Container = styled.form`
@@ -96,13 +88,16 @@ const Container = styled.form`
 `
 
 const StyledLabel = styled.label`
-    font-size: xx-large;
+    font-size: x-large;
 `
 
 const StyledInput = styled.input`
     padding-right: 6vw;
+    border-width: 0;
     font-size:x-large;
     margin-top:1vh;
+    -webkit-box-shadow: 0px 0px 3px 1px #B4B4B4; 
+    box-shadow: 0px 0px 3px 1px #B4B4B4;   
 `
 
 const InputContainer = styled.div`
