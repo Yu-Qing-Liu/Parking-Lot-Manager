@@ -17,7 +17,7 @@ const ErrorModal = () => {
             <Wrapper>
                 <Container>
                     <StyledTitle>It Seems That An Error Occured</StyledTitle>
-                    <Styledp>{JSON.stringify(ErrorModalContent)}</Styledp>
+                    <Styledp>{ErrorModalContent}</Styledp>
                     <StyledButton2 onClick={(e) => {
                         e.preventDefault()
                         CloseErrorModal();

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 const RegistrationModal = () => {
 
@@ -28,20 +29,34 @@ const RegistrationModal = () => {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                Address: document.getElementById("address").value,
-                                PhoneNumber: document.getElementById("phone").value,
-                                Email: document.getElementById("email").value,
-                                Password: document.getElementById("password").value,
-                                ConfirmPassword: document.getElementById("ConfirmPassword").value
+                                address: document.getElementById("address").value,
+                                phoneNumber: document.getElementById("phone").value,
+                                email: document.getElementById("email").value,
+                                password: document.getElementById("password").value,
+                                confirmPassword: document.getElementById("ConfirmPassword").value
                             })
                         })
                         .then(res => res.json())
                         .then((response) => {
-                            CloseRegistrationModal();
-                            history.push(`/User/${response.data.UserId}`);
+                            if(response.status === "success")  {
+                                const auth = getAuth();
+                                let email = document.getElementById("email").value;
+                                let password = document.getElementById("password").value;
+                                signInWithEmailAndPassword(auth,email,password)
+                                .then((userCredentials) => {
+                                    CloseRegistrationModal();
+                                    history.push(`/profile/${response.uid}`);
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                            } else {
+                                ShowErrorModal({data:response.error});
+                            }
+                            
                         })
                         .catch((err) => {
-                            ShowErrorModal(err);
+                            console.log(err);
                         })
                     }}
                     >

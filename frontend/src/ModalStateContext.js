@@ -39,7 +39,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 DisplayErrorModal:true,
-                ErrorModalContent:action,
+                ErrorModalContent:action.data,
             }
         }
         case 'close-error-modal': {

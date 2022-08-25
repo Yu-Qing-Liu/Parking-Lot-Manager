@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from 'react';
 import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {GlobalStates} from "../../GlobalStates";
 
 const SignInModal = () => {
 
@@ -23,8 +22,6 @@ const SignInModal = () => {
                     const auth = getAuth();
                     let email = document.getElementById("signInEmail").value;
                     let password = document.getElementById("signInPassword").value;
-                    console.log(email);
-                    console.log(password);
                     signInWithEmailAndPassword(auth,email,password)
                     .then((userCredentials) => {
                         CloseSignInModal();

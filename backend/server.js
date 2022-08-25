@@ -5,7 +5,9 @@ const morgan = require("morgan");
 const app = express();
 
 const {
-    createUser
+    createUser,
+    getAllUsers,
+    deleteUser
 } = require("./Handlers/AuthentificationHandlers");
 
 app.use(morgan("tiny"))
@@ -16,8 +18,11 @@ app.use(express.static("public"))
 /*↓↓↓ Endpoints ↓↓↓*/ 
 
 //Login And Authentification endpoints
-app.post("/createUser", createUser)
-
+app.post("/createUser", createUser);
+//Get all existing accounts
+app.get("/getAllUsers", getAllUsers);
+//Delete a user by uid
+app.delete("/deleteUser/:uid", deleteUser);
 
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
