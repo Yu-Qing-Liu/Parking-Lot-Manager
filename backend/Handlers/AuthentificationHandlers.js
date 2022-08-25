@@ -38,20 +38,20 @@ const createUser = async (req,res) => {
             const db = client.db("Users");
             await db.collection("UserData").insertOne({
                 _id:uid,
-                address:address,
-                phoneNumber:phoneNumber,
                 email:email,
+                phoneNumber:phoneNumber,
+                firstName:"Not set yet",
+                lastName:"Not set yet",
+                address:address,
+                city:"Not set yet",
+                postalCode:"Not set yet",
+                country:"Not set yet",
+                parkingLotId:null,
             });
             client.close();
             res.status(200).json({
                 status:"success", 
-                uid, 
-                data: {
-                    _id:uid,
-                    address:address,
-                    phoneNumber:phoneNumber,
-                    email:email,
-                }
+                uid
             });
         } catch (err) {
             client.close();

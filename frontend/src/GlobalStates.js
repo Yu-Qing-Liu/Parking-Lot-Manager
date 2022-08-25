@@ -10,6 +10,8 @@ const initialState = {
     },
     profileData:{
         hasLoaded:false,
+        email:null,
+        phoneNumber:null,
         firstName:"Not set yet",
         lastName:"Not set yet",
         address:"Not set yet",
