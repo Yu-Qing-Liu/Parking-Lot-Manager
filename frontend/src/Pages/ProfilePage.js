@@ -7,7 +7,6 @@ const ProfilePage = () => {
     return(
         <>
             <SideBar></SideBar>
-            <ProfilePageManager></ProfilePageManager>
             <AccountInformationPanel></AccountInformationPanel>
         </>
     )

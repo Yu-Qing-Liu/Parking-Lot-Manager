@@ -18,7 +18,8 @@ const initialState = {
         city:"Not set yet",
         postalCode:"Not set yet",
         country:"Not set yet",
-    }
+    },
+    profilePageTab:"Home",
 }
 
 const reducer = (state, action) => {
@@ -49,6 +50,12 @@ const reducer = (state, action) => {
                 },
             }
         }
+        case "update-profile-page-tab": {
+            return {
+                ...state,
+                profilePageTab:action.page,
+            }
+        }
     }
 }
 
@@ -62,9 +69,16 @@ export const GlobalStatesProvider = ({children}) => {
         })
     }
 
-    const updateProfileData = (data) => {
+    const updateProfileData = (data) => {
         dispatch({
             type:"update-profile-data",
+            ...data
+        })
+    }
+
+    const updateProfilePageTab = (data) => {
+        dispatch({
+            type:"update-profile-page-tab",
             ...data
         })
     }
@@ -76,7 +90,8 @@ export const GlobalStatesProvider = ({children}) => {
                 dispatch,
                 actions: {
                     updateCurrentUserData,
-                    updateProfileData
+                    updateProfileData,
+                    updateProfilePageTab
                 },
             }}
         >

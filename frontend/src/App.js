@@ -28,12 +28,17 @@ const App = () => {
   } = useContext(GlobalStates);
 
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user && currentUserData.data === null) {
-      // User is signed in
-      updateCurrentUserData({data:user,exists:true});
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        updateCurrentUserData({data:user,exists:true});
+      }
+    });
+  },[])
+  
+
+  console.log(currentUserData);
 
   return (
     <BrowserRouter>

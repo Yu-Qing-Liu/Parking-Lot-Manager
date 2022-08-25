@@ -5,10 +5,10 @@ import SignInModal from "../Components/Modals/SignInModal";
 import RegistrationModal from "../Components/Modals/RegistrationModal";
 import ErrorModal from "../Components/Modals/ErrorModal";
 
-const TOKEN = "fetch-token";
+const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 
 const HomePage = () => {
-
+    console.log(TOKEN);
     return(
         <>
             <SignInModal></SignInModal>
