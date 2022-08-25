@@ -37,7 +37,9 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 profileData:{
-                    hasLoaded:false,
+                    hasLoaded:true,
+                    email:action.email,
+                    phoneNumber:action.phoneNumber,
                     firstName:action.firstName,
                     lastName:action.lastName,
                     address:action.address,

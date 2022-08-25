@@ -13,12 +13,29 @@ import {BsFillTelephoneFill} from "react-icons/bs";
 const AccountInformationPanel = () => {
 
     const {
-        state:{profileData}
+        actions:{updateProfileData},
+        state:{profileData,currentUserData}
     } = useContext(GlobalStates);
 
     useEffect(() => {
-        
-    }, []);
+        if(currentUserData.hasLoaded && currentUserData.exists) {
+            fetch(`/getUser/${currentUserData.data.uid}`)
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data);
+                updateProfileData({
+                    email:data.userData.email,
+                    phoneNumber:data.userData.phoneNumber,
+                    firstName:data.userData.firstName,
+                    lastName:data.userData.lastName,
+                    address:data.userData.address,
+                    city:data.userData.city,
+                    postalCode:data.userData.postalCode,
+                    country:data.userData.country,
+                })
+            })
+        }
+    }, [currentUserData.hasLoaded && currentUserData.exists]);
 
     return(
         <Wrapper>
@@ -27,7 +44,7 @@ const AccountInformationPanel = () => {
                     <StyledEmailIcon></StyledEmailIcon>
                     <StyledInfoText>Email:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.email}</StyledInfoText>
+                        <StyledInfoText1>{profileData.email}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -37,7 +54,7 @@ const AccountInformationPanel = () => {
                     <StyledPhoneIcon></StyledPhoneIcon>
                     <StyledInfoText>Phone Number:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.phoneNumber}</StyledInfoText>
+                        <StyledInfoText1>{profileData.phoneNumber}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -47,7 +64,7 @@ const AccountInformationPanel = () => {
                     <StyledProfileIcon></StyledProfileIcon>
                     <StyledInfoText>First Name:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.firstName}</StyledInfoText>
+                        <StyledInfoText1>{profileData.firstName}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -57,7 +74,7 @@ const AccountInformationPanel = () => {
                     <StyledProfileIcon></StyledProfileIcon>
                     <StyledInfoText>Last Name:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.lastName}</StyledInfoText>
+                        <StyledInfoText1>{profileData.lastName}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -67,7 +84,7 @@ const AccountInformationPanel = () => {
                     <StyledAddressIcon></StyledAddressIcon>
                     <StyledInfoText>Address:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.address}</StyledInfoText>
+                        <StyledInfoText1>{profileData.address}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -77,7 +94,7 @@ const AccountInformationPanel = () => {
                     <StyledCityIcon></StyledCityIcon>
                     <StyledInfoText>City:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.city}</StyledInfoText>
+                        <StyledInfoText1>{profileData.city}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -87,7 +104,7 @@ const AccountInformationPanel = () => {
                     <StyledMailBoxIcon></StyledMailBoxIcon>
                     <StyledInfoText>Postal Code:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.postalCode}</StyledInfoText>
+                        <StyledInfoText1>{profileData.postalCode}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -97,7 +114,7 @@ const AccountInformationPanel = () => {
                     <StyledCountryIcon></StyledCountryIcon>
                     <StyledInfoText>Country:&nbsp;</StyledInfoText>
                     {profileData.hasLoaded && (
-                        <StyledInfoText>{profileData.country}</StyledInfoText>
+                        <StyledInfoText1>{profileData.country}</StyledInfoText1>
                     )}
                     {!profileData.hasLoaded && (
                         <CircularProgress size="1vw"></CircularProgress>
@@ -134,6 +151,12 @@ const InfoContainer = styled.div`
 const StyledInfoText = styled.span`
     margin-top: 1vh;
     margin-bottom: 1vh;
+`
+
+const StyledInfoText1 = styled.span`
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    color:grey;
 `
 
 const StyledEmailIcon = styled(MdEmail)`

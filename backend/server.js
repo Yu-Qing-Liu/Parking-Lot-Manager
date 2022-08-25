@@ -10,6 +10,10 @@ const {
     deleteUser
 } = require("./Handlers/AuthentificationHandlers");
 
+const {
+    getUser,
+} = require("./Handlers/AccountHandlers");
+
 app.use(morgan("tiny"))
 app.use(express.json())
 app.use(express.static("public"))
@@ -24,6 +28,8 @@ app.get("/getAllUsers", getAllUsers);
 //Delete a user by uid
 app.delete("/deleteUser/:uid", deleteUser);
 
+//AccountManagement endpoints
+app.get("/getUser/:uid", getUser);
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/
