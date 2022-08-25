@@ -6,7 +6,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { GlobalStates } from "./GlobalStates";
 import { ModalStateContextProvider } from "./ModalStateContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 
 const firebaseConfig = {
@@ -23,16 +23,15 @@ const app = initializeApp(firebaseConfig);
 const App = () => {
 
   const {
+    state:{currentUserData},
     actions:{updateCurrentUserData}
   } = useContext(GlobalStates);
 
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
-    if (user) {
+    if (user && currentUserData.data === null) {
       // User is signed in
       updateCurrentUserData({data:user,exists:true});
-    } else {
-      updateCurrentUserData({data:null,exists:false});
     }
   });
 
