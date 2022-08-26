@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import ParkingLotContainer from "../ParkingLotContainer";
 
 const ProfileManageParkingLot = () => {
     return(
         <Wrapper>
-            <div>Test</div>
+            <ParkingLotContainer></ParkingLotContainer>
         </Wrapper>
     )
 }
@@ -11,7 +12,7 @@ const ProfileManageParkingLot = () => {
 const Wrapper = styled.div`
     position:absolute;
     left: 22vw;
-    top: 9vh;
+    top: 10vh;
 `
 
 export default ProfileManageParkingLot;

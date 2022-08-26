@@ -38,7 +38,9 @@ const initialState = {
         friday:false,
         saturday:false,
         sunday:false,
-    }
+    },
+    parkingLotsHasLoaded:false,
+    parkingLots:[],
 }
 
 const reducer = (state, action) => {
@@ -104,6 +106,13 @@ const reducer = (state, action) => {
                 }
             }
         }
+        case "update-parking-lots": {
+            return {
+                ...state,
+                parkingLots:[...initialState.parkingLots,action.data],
+                parkingLotsHasLoaded:true,
+            }
+        }
     }
 }
 
@@ -145,6 +154,13 @@ export const GlobalStatesProvider = ({children}) => {
         })
     }
 
+    const updateParkingLots = (data) => {
+        dispatch ({
+            type:"update-parking-lots",
+            ...data
+        })
+    }
+
     return(
         <GlobalStates.Provider
             value = {{
@@ -155,7 +171,8 @@ export const GlobalStatesProvider = ({children}) => {
                     updateProfileData,
                     updateProfilePageTab,
                     updateProfileAccountButtonsState,
-                    updateParkingLotDays
+                    updateParkingLotDays,
+                    updateParkingLots
                 },
             }}
         >
