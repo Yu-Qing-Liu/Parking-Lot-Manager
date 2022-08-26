@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { GlobalStates } from "../../GlobalStates";
+import { ModalStateContext } from "../../ModalStateContext";
 import styled from "styled-components";
 import TimePicker from 'react-time-picker';
 import DayCheckBox from "./DayCheckBox";
@@ -10,27 +11,57 @@ const AvailabilitiesForm = () => {
     const [endTime, changeEndTime] = useState('00:00');
 
     const {
-        state:{profileData,parkingLotDays},
+        state:{profileData,parkingLotDays,currentUserData},
         actions:{updateParkingLotDays}
     } = useContext(GlobalStates);
 
+    const {
+        actions:{ShowErrorModal}
+    } = useContext(ModalStateContext);
+
     return(
-        <Wrapper>
+        <Wrapper onSubmit={(e) => {
+            e.preventDefault();
+            fetch(`/createParkingLot/${currentUserData.data.uid}`, {
+                method: 'POST',
+                headers: {
+                    Accept: "application/json",
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    country:(document.getElementById("parkingLotCountry").value !== "" ? document.getElementById("parkingLotCountry").value : profileData.country),
+                    city:(document.getElementById("parkingLotCity").value !== "" ? document.getElementById("parkingLotCity").value : profileData.city),
+                    address:(document.getElementById("parkingLotAddress").value !== "" ? document.getElementById("parkingLotAddress").value : profileData.address),
+                    startTime:startTime,
+                    endTime:endTime,
+                    days:parkingLotDays,
+                    price:(document.getElementById("parkingLotPrice").value),
+                })
+            })
+            .then(res => res.json())
+            .then((data) => {
+                if(data.status === "success") {
+                    console.log(data);
+                } else {
+                    ShowErrorModal({data:data.error});
+                }
+            })
+        }}>
             <StyledTitle>Create a parking lot</StyledTitle>
             <Container>
                 <InputContainer>
                     <StyledLabel>Country</StyledLabel>
-                    <StyledInput id={"parkingLotAddress"} placeholder={profileData.country} required></StyledInput>
+                    <StyledInput id={"parkingLotCountry"} placeholder={profileData.country}></StyledInput>
                 </InputContainer>
                 <InputContainer>
                     <StyledLabel>City</StyledLabel>
-                    <StyledInput id={"parkingLotCity"} placeholder={profileData.city} required></StyledInput>
+                    <StyledInput id={"parkingLotCity"} placeholder={profileData.city}></StyledInput>
                 </InputContainer>
             </Container>
             <Container>
                 <InputContainer>
                     <StyledLabel>Address</StyledLabel>
-                    <StyledInput id={"parkingLotAddress"} placeholder={profileData.address} required></StyledInput>
+                    <StyledInput id={"parkingLotAddress"} placeholder={profileData.address}></StyledInput>
                 </InputContainer>
             </Container>
             <Container>
@@ -53,6 +84,12 @@ const AvailabilitiesForm = () => {
                 <DayCheckBox label={"Saturday"} id={"saturday"} handleClick={() => updateParkingLotDays({...parkingLotDays, saturday:!parkingLotDays.saturday})}></DayCheckBox>
                 <DayCheckBox label={"Sunday"} id={"sunday"} handleClick={() => updateParkingLotDays({...parkingLotDays, sunday:!parkingLotDays.sunday})}></DayCheckBox>
             </DaysContainer>
+            <Container>
+                <InputContainer>
+                    <StyledLabel>Price</StyledLabel>
+                    <StyledInput id={"parkingLotPrice"} placeholder={"00.00"} required></StyledInput>
+                </InputContainer>
+            </Container>
             <InputContainer>
                 <SubmitButton type="submit">Create Parking Lot</SubmitButton>
             </InputContainer>

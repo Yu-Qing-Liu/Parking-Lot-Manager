@@ -46,7 +46,7 @@ const createUser = async (req,res) => {
                 city:"Not set yet",
                 postalCode:"Not set yet",
                 country:"Not set yet",
-                parkingLotId:null,
+                parkingLotId:[],
             });
             client.close();
             res.status(200).json({

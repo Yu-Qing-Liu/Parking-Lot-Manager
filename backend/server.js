@@ -15,6 +15,10 @@ const {
     getUser,
 } = require("./Handlers/AccountHandlers");
 
+const {
+    createParkingLot,
+} = require("./Handlers/ParkingLotHandlers");
+
 app.use(morgan("tiny"))
 app.use(express.json())
 app.use(express.static("public"))
@@ -32,6 +36,9 @@ app.delete("/deleteUser/:uid", deleteUser);
 //AccountManagement endpoints
 app.get("/getUser/:uid", getUser);
 app.patch("/updateUser/:uid", updateUser);
+
+//ParkingLotManagement endpoints
+app.post("/createParkingLot/:uid", createParkingLot);
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/
