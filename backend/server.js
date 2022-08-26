@@ -7,7 +7,8 @@ const app = express();
 const {
     createUser,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    updateUser,
 } = require("./Handlers/AuthentificationHandlers");
 
 const {
@@ -30,6 +31,7 @@ app.delete("/deleteUser/:uid", deleteUser);
 
 //AccountManagement endpoints
 app.get("/getUser/:uid", getUser);
+app.patch("/updateUser/:uid", updateUser);
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/

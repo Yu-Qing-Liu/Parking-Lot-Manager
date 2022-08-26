@@ -36,9 +36,6 @@ const App = () => {
       }
     });
   },[])
-  
-
-  console.log(currentUserData);
 
   return (
     <BrowserRouter>

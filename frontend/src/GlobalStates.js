@@ -20,6 +20,16 @@ const initialState = {
         country:"Not set yet",
     },
     profilePageTab:"Home",
+    profileAccountButtonsState:{
+        emailButton:false,
+        phoneNumberButton:false,
+        firstNameButton:false,
+        lastNameButton:false,
+        addressButton:false,
+        cityButton:false,
+        postalCodeButton:false,
+        countryButton:false,
+    },
 }
 
 const reducer = (state, action) => {
@@ -56,6 +66,21 @@ const reducer = (state, action) => {
                 profilePageTab:action.page,
             }
         }
+        case "update-profile-account-buttons-state": {
+            return {
+                ...state,
+                profileAccountButtonsState:{
+                    emailButton:action.emailButtonState,
+                    phoneNumberButton:action.phoneButtonState,
+                    firstNameButton:action.firstNameButtonState,
+                    lastNameButton:action.lastNameButtonState,
+                    addressButton:action.addressButtonState,
+                    cityButton:action.cityButtonState,
+                    postalCodeButton:action.postalCodeButtonState,
+                    countryButton:action.countryButtonState,
+                },
+            }
+        }
     }
 }
 
@@ -83,6 +108,13 @@ export const GlobalStatesProvider = ({children}) => {
         })
     }
 
+    const updateProfileAccountButtonsState = (data) => {
+        dispatch({
+            type:"update-profile-account-buttons-state",
+            ...data
+        })
+    }
+
     return(
         <GlobalStates.Provider
             value = {{
@@ -91,7 +123,8 @@ export const GlobalStatesProvider = ({children}) => {
                 actions: {
                     updateCurrentUserData,
                     updateProfileData,
-                    updateProfilePageTab
+                    updateProfilePageTab,
+                    updateProfileAccountButtonsState
                 },
             }}
         >

@@ -8,7 +8,6 @@ import ErrorModal from "../Components/Modals/ErrorModal";
 const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 
 const HomePage = () => {
-    console.log(TOKEN);
     return(
         <>
             <SignInModal></SignInModal>

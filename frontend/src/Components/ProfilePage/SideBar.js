@@ -1,17 +1,23 @@
 import styled from "styled-components";
 import {FaHome} from "react-icons/fa";
 import {MdAccountBox} from "react-icons/md";
+import { GlobalStates } from "../../GlobalStates";
+import { useContext } from "react";
 
-const SideBar = () => {
+const SideBar = () => {
+
+    const {
+        actions:{updateProfilePageTab}
+    } = useContext(GlobalStates);
 
     return(
         <StyledSideBar>
             <StyledContainer>
-                <StyledButton>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Home"})}>
                     <StyledHomeIcon></StyledHomeIcon>
                     <StyledButtonText>Home</StyledButtonText>
                 </StyledButton>
-                <StyledButton>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Account"})}>
                     <StyledAccountIcon></StyledAccountIcon>
                     <StyledButtonText>Account</StyledButtonText>
                 </StyledButton>
