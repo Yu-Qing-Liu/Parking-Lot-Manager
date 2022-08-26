@@ -3,6 +3,8 @@ import {FaHome} from "react-icons/fa";
 import {MdAccountBox} from "react-icons/md";
 import { GlobalStates } from "../../GlobalStates";
 import { useContext } from "react";
+import { ImCalendar } from "react-icons/im"; 
+import { AiFillCar } from "react-icons/ai";
 
 const SideBar = () => {
 
@@ -20,6 +22,14 @@ const SideBar = () => {
                 <StyledButton onClick={() => updateProfilePageTab({page:"Account"})}>
                     <StyledAccountIcon></StyledAccountIcon>
                     <StyledButtonText>Account</StyledButtonText>
+                </StyledButton>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Create Parking Lot"})}>
+                    <StyledCalendarIcon></StyledCalendarIcon>
+                    <StyledButtonText>Create Parking Lot</StyledButtonText>
+                </StyledButton>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Manage Parking Lot"})}>
+                    <StyledCarIcon></StyledCarIcon>
+                    <StyledButtonText>Manage Parking Lots</StyledButtonText>
                 </StyledButton>
             </StyledContainer>
         </StyledSideBar>
@@ -69,6 +79,20 @@ const StyledHomeIcon = styled(FaHome)`
 `
 
 const StyledAccountIcon = styled(MdAccountBox)`
+    margin:0.7vw;
+    margin-right: 2vw;
+    width: 2vw;
+    height: 4vh;
+`
+
+const StyledCalendarIcon = styled(ImCalendar)`
+    margin:0.7vw;
+    margin-right: 2vw;
+    width: 2vw;
+    height: 4vh;
+`
+
+const StyledCarIcon = styled(AiFillCar)`
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;

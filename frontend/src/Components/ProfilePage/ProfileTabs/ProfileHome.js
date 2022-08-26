@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import AccountInformationPanel from "./AccountInformationPanel"
+import AccountInformationPanel from "../AccountInformationPanel"
 
 const ProfileHome = () => {
     

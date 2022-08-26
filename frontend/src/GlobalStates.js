@@ -20,7 +20,7 @@ const initialState = {
         country:"Not set yet",
     },
     profilePageTab:"Home",
-    profileAccountButtonsState:{
+    profileAccountButtonsState: {
         emailButton:false,
         phoneNumberButton:false,
         firstNameButton:false,
@@ -30,6 +30,15 @@ const initialState = {
         postalCodeButton:false,
         countryButton:false,
     },
+    parkingLotDays: {
+        monday:false,
+        tuesday:false,
+        wednesday:false,
+        thursday:false,
+        friday:false,
+        saturday:false,
+        sunday:false,
+    }
 }
 
 const reducer = (state, action) => {
@@ -70,15 +79,29 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 profileAccountButtonsState:{
-                    emailButton:action.emailButtonState,
-                    phoneNumberButton:action.phoneButtonState,
-                    firstNameButton:action.firstNameButtonState,
-                    lastNameButton:action.lastNameButtonState,
-                    addressButton:action.addressButtonState,
-                    cityButton:action.cityButtonState,
-                    postalCodeButton:action.postalCodeButtonState,
-                    countryButton:action.countryButtonState,
+                    emailButton:action.emailButton,
+                    phoneNumberButton:action.phoneNumberButton,
+                    firstNameButton:action.firstNameButton,
+                    lastNameButton:action.lastNameButton,
+                    addressButton:action.addressButton,
+                    cityButton:action.cityButton,
+                    postalCodeButton:action.postalCodeButton,
+                    countryButton:action.countryButton,
                 },
+            }
+        }
+        case "update-parking-lot-days" : {
+            return {
+                ...state,
+                parkingLotDays:{
+                    monday:action.monday,
+                    tuesday:action.tuesday,
+                    wednesday:action.wednesday,
+                    thursday:action.thursday,
+                    friday:action.friday,
+                    saturday:action.saturday,
+                    sunday:action.sunday,
+                }
             }
         }
     }
@@ -115,6 +138,13 @@ export const GlobalStatesProvider = ({children}) => {
         })
     }
 
+    const updateParkingLotDays = (data) => {
+        dispatch({
+            type:"update-parking-lot-days",
+            ...data
+        })
+    }
+
     return(
         <GlobalStates.Provider
             value = {{
@@ -124,7 +154,8 @@ export const GlobalStatesProvider = ({children}) => {
                     updateCurrentUserData,
                     updateProfileData,
                     updateProfilePageTab,
-                    updateProfileAccountButtonsState
+                    updateProfileAccountButtonsState,
+                    updateParkingLotDays
                 },
             }}
         >

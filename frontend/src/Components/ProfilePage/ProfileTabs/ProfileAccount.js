@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useContext } from "react";
-import { GlobalStates } from "../../GlobalStates";
-import { ModalStateContext } from "../../ModalStateContext";
-import FormItem from "./FormItem";
+import { GlobalStates } from "../../../GlobalStates";
+import { ModalStateContext } from "../../../ModalStateContext";
+import FormItem from "../FormItem";
 import {IoIosWarning} from "react-icons/io";
 import { getAuth, signOut } from "firebase/auth";
 import { useHistory } from "react-router-dom";
@@ -79,8 +79,8 @@ const ProfileAccount = () => {
                         id={"changeEmail"}
                         placeholder={profileData.email}
                         buttonState={profileAccountButtonsState.emailButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({emailButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({emailButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, emailButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, emailButton:false})}
                     >
                     </FormItem>
                     <FormItem 
@@ -88,8 +88,8 @@ const ProfileAccount = () => {
                         id={"changePhone"}
                         placeholder={profileData.phoneNumber}
                         buttonState={profileAccountButtonsState.phoneNumberButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({phoneButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({phoneButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, phoneNumberButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, phoneNumberButton:false})}
                     >
                     </FormItem>
                 </Container>
@@ -99,8 +99,8 @@ const ProfileAccount = () => {
                         id={"changeFirstName"}
                         placeholder={profileData.firstName}
                         buttonState={profileAccountButtonsState.firstNameButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({firstNameButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({firstNameButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, firstNameButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, firstNameButton:false})}
                     >
                     </FormItem>
                     <FormItem 
@@ -108,8 +108,8 @@ const ProfileAccount = () => {
                         id={"changeLastName"}
                         placeholder={profileData.lastName}
                         buttonState={profileAccountButtonsState.lastNameButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({lastNameButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({lastNameButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, lastNameButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, lastNameButton:false})}
                     >
                     </FormItem>
                 </Container>
@@ -119,8 +119,8 @@ const ProfileAccount = () => {
                         id={"changeAddress"}
                         placeholder={profileData.address}
                         buttonState={profileAccountButtonsState.addressButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({addressButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({addressButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, addressButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, addressButton:false})}
                     >
                     </FormItem>
                     <FormItem 
@@ -128,8 +128,8 @@ const ProfileAccount = () => {
                         id={"changeCity"}
                         placeholder={profileData.city}
                         buttonState={profileAccountButtonsState.cityButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({cityButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({cityButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, cityButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, cityButton:false})}
                     >
                     </FormItem>
                 </Container>
@@ -139,8 +139,8 @@ const ProfileAccount = () => {
                         id={"changePostalCode"}
                         placeholder={profileData.postalCode}
                         buttonState={profileAccountButtonsState.postalCodeButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({postalCodeButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({postalCodeButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, postalCodeButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, postalCodeButton:false})}
                     >
                     </FormItem>
                     <FormItem 
@@ -148,8 +148,8 @@ const ProfileAccount = () => {
                         id={"changeCountry"}
                         placeholder={profileData.country}
                         buttonState={profileAccountButtonsState.countryButton}
-                        handleClickEdit={() => updateProfileAccountButtonsState({countryButtonState:true})}
-                        handleClickSubmit={() => updateProfileAccountButtonsState({countryButtonState:false})}
+                        handleClickEdit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, countryButton:true})}
+                        handleClickSubmit={() => updateProfileAccountButtonsState({...profileAccountButtonsState, countryButton:false})}
                     >
                     </FormItem>
                 </Container>
