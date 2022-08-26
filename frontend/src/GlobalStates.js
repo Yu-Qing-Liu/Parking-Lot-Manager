@@ -109,7 +109,7 @@ const reducer = (state, action) => {
         case "update-parking-lots": {
             return {
                 ...state,
-                parkingLots:[...initialState.parkingLots,action.data],
+                parkingLots:action.data,
                 parkingLotsHasLoaded:true,
             }
         }

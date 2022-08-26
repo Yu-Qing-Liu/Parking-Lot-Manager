@@ -17,6 +17,7 @@ const {
 
 const {
     createParkingLot,
+    getParkingLots,
 } = require("./Handlers/ParkingLotHandlers");
 
 app.use(morgan("tiny"))
@@ -39,6 +40,7 @@ app.patch("/updateUser/:uid", updateUser);
 
 //ParkingLotManagement endpoints
 app.post("/createParkingLot/:uid", createParkingLot);
+app.get("/getParkingLots/:uid", getParkingLots);
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/
