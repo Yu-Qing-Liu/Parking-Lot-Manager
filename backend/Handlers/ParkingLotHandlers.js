@@ -29,8 +29,6 @@ const createParkingLot = async (req,res) => {
     })
 
     //Verify some information
-    console.log(typeof price);
-    console.log(price.toString());
     if(price.toString() === "NaN") {
         res.status(400).json({status:"error", error:"Please enter a valid amount for the price"})
         return;
@@ -101,7 +99,70 @@ const getParkingLots = async(req,res) => {
     }
 }
 
+// Edits a Parking lot, takes a parkingLot uid and updates a parking lot
+const updateParkingLot = async(req,res) => {
+    const uid = req.params.uid;
+    const db = client.db("ParkingLots");
+    let address = req.body.address;
+    let city = req.body.city;
+    let country = req.body.country;
+    let startTime = req.body.startTime;
+    let endTime = req.body.endTime;
+    let days = req.body.days;
+    let price = parseFloat(req.body.price).toFixed(2);
+
+    let daysValues = Object.values(days);
+    let daysKeys = Object.keys(days);
+    let availableDays = []
+    daysValues.forEach((bool,index) => {
+        if(bool) {
+            availableDays.push(daysKeys[index]);
+        }
+    })
+
+    //Verify information
+    if(req.body.price !== "" && price.toString() === "NaN") {
+        res.status(400).json({status:"error", error:"Please enter a valid amount for the price"})
+        return;
+    }
+    if(availableDays.length === 0) {
+        res.status(400).json({status:"error", error:"Please select a day to host your parking lot"})
+        return;
+    }
+    if(startTime === endTime) {
+        res.status(400).json({status:"error", error:"Please select a valid time frame to host your parking lot"})
+        return;
+    }
+
+    let data = [{address:address},{city:city},{country:country},{startTime:startTime},{endTime:endTime},{days:availableDays},{price:price}];
+    //Filter out what needs to be updated
+    let updates = [];
+    data.forEach((dataObj) => {
+        if(Object.values(dataObj).toString() !== "" && Object.values(dataObj).toString() !== "NaN") {
+            console.log(Object.values(dataObj).toString());
+            updates.push(dataObj);
+        }
+    })
+
+    try {
+        await client.connect();
+        //Loop through updates and perform updates
+        for(let i = 0; i < updates.length; i++) {
+            await db.collection("ParkingLotsData").updateOne(
+                {_id:uid},
+                {$set: updates[i]}
+            )
+        }
+        res.status(200).json({status:"success"});
+        client.close();
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message});
+    }
+}
+
 module.exports = {
     createParkingLot,
     getParkingLots,
+    updateParkingLot
 }

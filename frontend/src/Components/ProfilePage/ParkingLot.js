@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { ModalStateContext } from "../../ModalStateContext";
 
-const ParkingLot = ({parkingLot}) => {
-    console.log(parkingLot);
+const ParkingLot = ({parkingLot}) => {
+
+    const {
+        actions:{ShowEditParkingLotModal}
+    } = useContext(ModalStateContext);
+
     return(
         <Wrapper>
             <FirstContainer>
@@ -49,7 +55,10 @@ const ParkingLot = ({parkingLot}) => {
                 </StyledData>
             </InfoContainer>
             <ButtonContainer>
-                <StyledEditButton>
+                <StyledEditButton onClick={(e) => {
+                    e.preventDefault();
+                    ShowEditParkingLotModal({data: parkingLot});
+                }}>
                     Edit
                 </StyledEditButton>
                 <StyledDeleteButton>

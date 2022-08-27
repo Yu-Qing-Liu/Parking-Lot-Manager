@@ -8,7 +8,7 @@ import ParkingLot from "./ParkingLot";
 const ParkingLotContainer = () => {
 
     const {
-        state:{parkingLotsHasLoaded,parkingLots,currentUserData},
+        state:{parkingLotsHasLoaded,parkingLots,currentUserData,refetchingParkingLots},
         actions:{updateParkingLots},
     } = useContext(GlobalStates);
 
@@ -26,7 +26,7 @@ const ParkingLotContainer = () => {
                 ShowErrorModal({data:data.error})
             }
         })
-    }, []);
+    }, [refetchingParkingLots]);
 
     if(parkingLotsHasLoaded) {
         return(

@@ -18,6 +18,7 @@ const {
 const {
     createParkingLot,
     getParkingLots,
+    updateParkingLot,
 } = require("./Handlers/ParkingLotHandlers");
 
 app.use(morgan("tiny"))
@@ -29,9 +30,7 @@ app.use(express.static("public"))
 
 //Login And Authentification endpoints
 app.post("/createUser", createUser);
-//Get all existing accounts
 app.get("/getAllUsers", getAllUsers);
-//Delete a user by uid
 app.delete("/deleteUser/:uid", deleteUser);
 
 //AccountManagement endpoints
@@ -41,6 +40,8 @@ app.patch("/updateUser/:uid", updateUser);
 //ParkingLotManagement endpoints
 app.post("/createParkingLot/:uid", createParkingLot);
 app.get("/getParkingLots/:uid", getParkingLots);
+app.patch("/updateParkingLot/:uid", updateParkingLot);
+
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/

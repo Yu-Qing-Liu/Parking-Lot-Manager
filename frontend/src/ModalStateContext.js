@@ -7,6 +7,8 @@ const initialState = {
     DisplayRegistrationModal:false,
     DisplayErrorModal:false,
     ErrorModalContent:null,
+    DisplayEditParkingLotModal:false,
+    EditParkingLotModalData:null,
 }
 
 const reducer = (state, action) => {
@@ -49,6 +51,20 @@ const reducer = (state, action) => {
                 ErrorModalContent:null,
             }
         }
+        case 'show-edit-parking-lot-modal': {
+            return {
+                ...state,
+                DisplayEditParkingLotModal:true,
+                EditParkingLotModalData:action.data,
+            }
+        }
+        case 'close-edit-parking-lot-modal': {
+            return {
+                ...state,
+                DisplayEditParkingLotModal:false,
+                EditParkingLotModalData:null,
+            }
+        }
     }
 }
 
@@ -86,6 +102,19 @@ export const ModalStateContextProvider = ({children}) => {
         });
     }
 
+    const ShowEditParkingLotModal = (data) => {
+        dispatch({
+            type: 'show-edit-parking-lot-modal',
+            ...data
+        })
+    }
+
+    const CloseEditParkingLotModal = () => {
+        dispatch({
+            type: 'close-edit-parking-lot-modal'
+        })
+    }
+
     return(
         <ModalStateContext.Provider
             value = {{
@@ -97,7 +126,9 @@ export const ModalStateContextProvider = ({children}) => {
                     ShowRegistrationModal,
                     CloseRegistrationModal,
                     ShowErrorModal,
-                    CloseErrorModal
+                    CloseErrorModal,
+                    ShowEditParkingLotModal,
+                    CloseEditParkingLotModal
                 },
             }}
         >
