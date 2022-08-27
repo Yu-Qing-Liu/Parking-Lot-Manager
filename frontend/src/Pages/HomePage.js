@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import SideBar from "../Components/HomePage/SideBar";
-import Map from "react-map-gl";
 import SignInModal from "../Components/Modals/SignInModal";
 import RegistrationModal from "../Components/Modals/RegistrationModal";
-import ErrorModal from "../Components/Modals/ErrorModal";
+import Map from "react-map-gl";
 
 const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 

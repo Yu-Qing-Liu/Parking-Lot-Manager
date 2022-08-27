@@ -111,9 +111,10 @@ const Wrapper = styled.div`
     width:20vw;
     height: 39vh;
     border-radius: 1.5vw;
-    background-color: rgb(171,184,195,0.2);
+    background-color: rgb(171,184,195,0.75);
     display: flex;
     flex-direction: column;
+    z-index: 2;
 `
 
 const Container = styled.div`
@@ -135,7 +136,7 @@ const StyledInfoText = styled.span`
 const StyledInfoText1 = styled.span`
     margin-top: 1vh;
     margin-bottom: 1vh;
-    color:grey;
+    color:white;
 `
 
 const StyledEmailIcon = styled(MdEmail)`
