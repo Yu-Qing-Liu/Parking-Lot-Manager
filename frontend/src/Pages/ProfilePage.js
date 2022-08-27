@@ -5,6 +5,7 @@ import { GlobalStates } from "../GlobalStates";
 import { useContext, useEffect } from "react";
 import ErrorModal from "../Components/Modals/ErrorModal";
 import EditParkingLotModal from "../Components/Modals/EditParkingLotModal";
+import LoadingModal from "../Components/Modals/LoadingModal";
 
 const ProfilePage = () => {
 
@@ -34,6 +35,7 @@ const ProfilePage = () => {
 
     return(
         <>
+            <LoadingModal></LoadingModal>
             <EditParkingLotModal></EditParkingLotModal>
             <ErrorModal></ErrorModal>
             <SideBar></SideBar>

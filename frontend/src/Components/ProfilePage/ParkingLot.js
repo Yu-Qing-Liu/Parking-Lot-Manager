@@ -11,7 +11,7 @@ const ParkingLot = ({parkingLot}) => {
     } = useContext(GlobalStates);
 
     const {
-        actions:{ShowEditParkingLotModal,ShowErrorModal}
+        actions:{ShowEditParkingLotModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal}
     } = useContext(ModalStateContext);
 
     if(parkingLot !== null) {
@@ -70,6 +70,7 @@ const ParkingLot = ({parkingLot}) => {
                     </StyledEditButton>
                     <StyledDeleteButton onClick={(e) => {
                         e.preventDefault();
+                        ShowLoadingModal();
                         fetch(`/deleteParkingLot/${parkingLot._id}`,{
                             method: 'DELETE',
                             headers: {

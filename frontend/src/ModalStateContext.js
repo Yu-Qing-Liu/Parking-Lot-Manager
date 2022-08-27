@@ -9,6 +9,7 @@ const initialState = {
     ErrorModalContent:null,
     DisplayEditParkingLotModal:false,
     EditParkingLotModalData:null,
+    DisplayLoadingModal:false,
 }
 
 const reducer = (state, action) => {
@@ -65,6 +66,18 @@ const reducer = (state, action) => {
                 EditParkingLotModalData:null,
             }
         }
+        case 'show-loading-modal': {
+            return {
+                ...state,
+                DisplayLoadingModal:true,
+            }
+        }
+        case 'close-loading-modal': {
+            return {
+                ...state,
+                DisplayLoadingModal:false,
+            }
+        }
     }
 }
 
@@ -115,6 +128,18 @@ export const ModalStateContextProvider = ({children}) => {
         })
     }
 
+    const ShowLoadingModal = () => {
+        dispatch({
+            type:"show-loading-modal"
+        })
+    }
+
+    const CloseLoadingModal = () => {
+        dispatch({
+            type:"close-loading-modal"
+        })
+    }
+
     return(
         <ModalStateContext.Provider
             value = {{
@@ -128,7 +153,9 @@ export const ModalStateContextProvider = ({children}) => {
                     ShowErrorModal,
                     CloseErrorModal,
                     ShowEditParkingLotModal,
-                    CloseEditParkingLotModal
+                    CloseEditParkingLotModal,
+                    ShowLoadingModal,
+                    CloseLoadingModal,
                 },
             }}
         >

@@ -16,12 +16,13 @@ const AvailabilitiesForm = () => {
     } = useContext(GlobalStates);
 
     const {
-        actions:{ShowErrorModal}
+        actions:{ShowErrorModal,ShowLoadingModal,CloseLoadingModal}
     } = useContext(ModalStateContext);
 
     return(
         <Wrapper onSubmit={(e) => {
             e.preventDefault();
+            ShowLoadingModal();
             fetch(`/createParkingLot/${currentUserData.data.uid}`, {
                 method: 'POST',
                 headers: {
@@ -41,7 +42,9 @@ const AvailabilitiesForm = () => {
             .then(res => res.json())
             .then((data) => {
                 if(data.status === "success") {
+                    CloseLoadingModal();
                 } else {
+                    CloseLoadingModal();
                     ShowErrorModal({data:data.error});
                 }
             })

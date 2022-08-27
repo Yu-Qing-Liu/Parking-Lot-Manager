@@ -13,7 +13,7 @@ const ParkingLotContainer = () => {
     } = useContext(GlobalStates);
 
     const {
-        actions:{ShowErrorModal},
+        actions:{ShowErrorModal,CloseLoadingModal},
     } = useContext(ModalStateContext)
 
     useEffect(() => {
@@ -21,8 +21,10 @@ const ParkingLotContainer = () => {
         .then(res => res.json())
         .then((data) => {
             if(data.status === "success") {
-                updateParkingLots({data:data.data})
+                updateParkingLots({data:data.data});
+                CloseLoadingModal();
             } else {
+                CloseLoadingModal();
                 ShowErrorModal({data:data.error})
             }
         })
