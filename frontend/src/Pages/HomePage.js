@@ -2,9 +2,7 @@ import styled from "styled-components";
 import SideBar from "../Components/HomePage/SideBar";
 import SignInModal from "../Components/Modals/SignInModal";
 import RegistrationModal from "../Components/Modals/RegistrationModal";
-import Map from "react-map-gl";
-
-const TOKEN = process.env.REACT_APP_MapboxAccessToken;
+import HomePageMap from "../Components/Maps/HomePageMap";
 
 const HomePage = () => {
     return(
@@ -13,20 +11,7 @@ const HomePage = () => {
             <RegistrationModal></RegistrationModal>
             <SideBar></SideBar>
             <MapContainer>
-                {
-                    /*
-                        <Map
-                            initialViewState={{
-                            longitude: -79.4512,
-                            latitude: 43.6568,
-                            zoom: 13
-                            }}
-                        mapStyle="mapbox://styles/mapbox/streets-v9"
-                        mapboxAccessToken={TOKEN}
-                        >
-                        </Map>
-                    */
-                }
+                <HomePageMap></HomePageMap>
             </MapContainer>
         </>
     )
