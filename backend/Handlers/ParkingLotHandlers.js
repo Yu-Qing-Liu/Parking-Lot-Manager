@@ -161,8 +161,40 @@ const updateParkingLot = async(req,res) => {
     }
 }
 
+//Deletes a parking lot by uid
+const deleteParkingLot = async(req,res) => {
+    const uid = req.params.uid;
+    const userId = req.body.uid;
+    const db1 = client.db("ParkingLots");
+    const db2 = client.db("Users");
+    try {
+        await client.connect();
+        //Check if parking lot exists
+        const parkingLot = await db1.collection("ParkingLotsData").findOne({_id:uid});
+        console.log(parkingLot);
+        if(parkingLot === null) {
+            throw new Error("The parking lot does not exist");
+        }
+        //Delete the parking lot
+        await db1.collection("ParkingLotsData").deleteOne({_id:uid});
+        //Update User's ParkingLot Id's
+        await db2.collection("UserData").updateOne(
+            {_id:userId},
+            {$pull: {
+                parkingLotId:{$in:[uid]},
+            }},
+        );
+        client.close();
+        res.status(200).json({status:"success"})
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message})
+    }
+}
+
 module.exports = {
     createParkingLot,
     getParkingLots,
-    updateParkingLot
+    updateParkingLot,
+    deleteParkingLot
 }

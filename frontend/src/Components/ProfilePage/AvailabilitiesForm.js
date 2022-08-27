@@ -41,7 +41,6 @@ const AvailabilitiesForm = () => {
             .then(res => res.json())
             .then((data) => {
                 if(data.status === "success") {
-                    console.log(data);
                 } else {
                     ShowErrorModal({data:data.error});
                 }
@@ -160,10 +159,6 @@ const StyledTimePicker = styled(TimePicker)`
     box-shadow: 0px 0px 3px 1px #B4B4B4;
     border-width: 0;
     margin-top:1vh;
-`
-
-const StyledCheckBox = styled.input`
-
 `
 
 const SubmitButton = styled.button`

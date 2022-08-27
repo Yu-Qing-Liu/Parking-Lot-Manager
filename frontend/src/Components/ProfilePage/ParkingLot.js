@@ -1,72 +1,115 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
+import { GlobalStates } from "../../GlobalStates";
 
 const ParkingLot = ({parkingLot}) => {
 
     const {
-        actions:{ShowEditParkingLotModal}
+        state:{refetchingParkingLots,currentUserData},
+        actions:{refetchParkingLots},
+    } = useContext(GlobalStates);
+
+    const {
+        actions:{ShowEditParkingLotModal,ShowErrorModal}
     } = useContext(ModalStateContext);
 
-    return(
-        <Wrapper>
-            <FirstContainer>
-                <StyledLabel>
-                    Address:&nbsp; 
-                </StyledLabel>
-                <StyledData>
-                    {parkingLot.address}
-                </StyledData>
-            </FirstContainer>
-            <InfoContainer>
-                <StyledLabel>
-                    City:&nbsp; 
-                </StyledLabel>
-                <StyledData>
-                    {parkingLot.city}
-                </StyledData>
-                <StyledLabel>
-                    Country:&nbsp; 
-                </StyledLabel>
-                <StyledData>
-                    {parkingLot.country}
-                </StyledData>
-            </InfoContainer>
-            <InfoContainer>
-                <StyledLabel>
-                    Available Between:&nbsp; 
-                </StyledLabel>
-                <StyledData>
-                    {`${parkingLot.startTime} and ${parkingLot.endTime}`}
-                </StyledData>
-                <StyledLabel>
-                    Every:&nbsp; 
-                </StyledLabel>
-                <StyledData>
-                    {parkingLot.days.toString()}
-                </StyledData>
-            </InfoContainer>
-            <InfoContainer>
-                <StyledLabel>
-                    Cost:&nbsp; 
-                </StyledLabel>
-                <StyledData>
-                    {`$${parkingLot.price}`}
-                </StyledData>
-            </InfoContainer>
-            <ButtonContainer>
-                <StyledEditButton onClick={(e) => {
-                    e.preventDefault();
-                    ShowEditParkingLotModal({data: parkingLot});
-                }}>
-                    Edit
-                </StyledEditButton>
-                <StyledDeleteButton>
-                    Delete
-                </StyledDeleteButton>
-            </ButtonContainer>
-        </Wrapper>
-    )
+    if(parkingLot !== null) {
+        return(
+            <Wrapper>
+                <FirstContainer>
+                    <StyledLabel>
+                        Address:&nbsp; 
+                    </StyledLabel>
+                    <StyledData>
+                        {parkingLot.address}
+                    </StyledData>
+                </FirstContainer>
+                <InfoContainer>
+                    <StyledLabel>
+                        City:&nbsp; 
+                    </StyledLabel>
+                    <StyledData>
+                        {parkingLot.city}
+                    </StyledData>
+                    <StyledLabel>
+                        Country:&nbsp; 
+                    </StyledLabel>
+                    <StyledData>
+                        {parkingLot.country}
+                    </StyledData>
+                </InfoContainer>
+                <InfoContainer>
+                    <StyledLabel>
+                        Available Between:&nbsp; 
+                    </StyledLabel>
+                    <StyledData>
+                        {`${parkingLot.startTime} and ${parkingLot.endTime}`}
+                    </StyledData>
+                    <StyledLabel>
+                        Every:&nbsp; 
+                    </StyledLabel>
+                    <StyledData>
+                        {parkingLot.days.toString()}
+                    </StyledData>
+                </InfoContainer>
+                <InfoContainer>
+                    <StyledLabel>
+                        Cost:&nbsp; 
+                    </StyledLabel>
+                    <StyledData>
+                        {`$${parkingLot.price}`}
+                    </StyledData>
+                </InfoContainer>
+                <ButtonContainer>
+                    <StyledEditButton onClick={(e) => {
+                        e.preventDefault();
+                        ShowEditParkingLotModal({data: parkingLot});
+                    }}>
+                        Edit
+                    </StyledEditButton>
+                    <StyledDeleteButton onClick={(e) => {
+                        e.preventDefault();
+                        fetch(`/deleteParkingLot/${parkingLot._id}`,{
+                            method: 'DELETE',
+                            headers: {
+                                Accept: "application/json",
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                uid:currentUserData.data.uid,
+                            })
+                        })
+                        .then(res => res.json())
+                        .then((data) => {
+                            if(data.status === "success") {
+                                if(refetchingParkingLots) {
+                                    refetchParkingLots({data:false});
+                                } else {
+                                    refetchParkingLots({data:true});
+                                }
+                            } else {
+                                if(refetchingParkingLots) {
+                                    refetchParkingLots({data:false});
+                                } else {
+                                    refetchParkingLots({data:true});
+                                }
+                                ShowErrorModal({data:data.error});
+                            }
+                        })
+                    }}
+                    >
+                        Delete
+                    </StyledDeleteButton>
+                </ButtonContainer>
+            </Wrapper>
+        )
+    } else {
+        return(
+            <></>
+        )
+    }
+    
 }
 
 const Wrapper = styled.div`
