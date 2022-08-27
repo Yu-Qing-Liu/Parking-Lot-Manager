@@ -10,7 +10,7 @@ const EditParkingLotModal = () => {
 
     const {
         state:{DisplayEditParkingLotModal,EditParkingLotModalData},
-        actions:{CloseEditParkingLotModal,ShowErrorModal},
+        actions:{CloseEditParkingLotModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
     } = useContext(ModalStateContext);
 
     const {
@@ -29,6 +29,7 @@ const EditParkingLotModal = () => {
             >
                 <Wrapper onSubmit={(e) => {
                     e.preventDefault();
+                    ShowLoadingModal();
                     let address = document.getElementById("modifyPLAddress").value;
                     let city = document.getElementById("modifyPLCity").value;
                     let country = document.getElementById("modifyPLCountry").value;
@@ -70,6 +71,7 @@ const EditParkingLotModal = () => {
                             }
                             CloseEditParkingLotModal();
                         } else {
+                            CloseLoadingModal();
                             ShowErrorModal({data:data.error});
                         }
                     })

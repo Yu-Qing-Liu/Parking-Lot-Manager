@@ -11,7 +11,7 @@ const RegistrationModal = () => {
 
     const {
         state:{DisplayRegistrationModal},
-        actions:{CloseRegistrationModal,ShowSignInModal,ShowErrorModal},
+        actions:{CloseRegistrationModal,ShowSignInModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
     } = useContext(ModalStateContext);
 
     return(
@@ -22,6 +22,7 @@ const RegistrationModal = () => {
             <Wrapper>
                 <Container onSubmit= {(e) => {
                         e.preventDefault();
+                        ShowLoadingModal();
                         fetch('/createUser', {
                             method: 'POST',
                             headers: {
@@ -44,19 +45,23 @@ const RegistrationModal = () => {
                                 let password = document.getElementById("password").value;
                                 signInWithEmailAndPassword(auth,email,password)
                                 .then((userCredentials) => {
+                                    CloseLoadingModal();
                                     CloseRegistrationModal();
                                     history.push(`/profile/${response.uid}`);
                                 })
                                 .catch((err) => {
-                                    console.log(err);
+                                    CloseLoadingModal();
+                                    ShowErrorModal({data:err.message});
                                 })
                             } else {
+                                CloseLoadingModal();
                                 ShowErrorModal({data:response.error});
                             }
                             
                         })
                         .catch((err) => {
-                            console.log(err);
+                            CloseLoadingModal();
+                            ShowErrorModal({data:err.message});
                         })
                     }}
                     >

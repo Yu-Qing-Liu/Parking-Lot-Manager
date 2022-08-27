@@ -25,7 +25,6 @@ const app = initializeApp(firebaseConfig);
 const App = () => {
 
   const {
-    state:{currentUserData},
     actions:{updateCurrentUserData}
   } = useContext(GlobalStates);
 

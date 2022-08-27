@@ -17,7 +17,7 @@ const ProfileAccount = () => {
     } = useContext(GlobalStates);
 
     const {
-        actions:{ShowErrorModal}
+        actions:{ShowErrorModal,ShowLoadingModal,CloseLoadingModal}
     } = useContext(ModalStateContext);
     
     return(
@@ -25,6 +25,7 @@ const ProfileAccount = () => {
             <Styledh1>Change Your Personal Information</Styledh1>
             <StyledForm onSubmit={(e) => {
                 e.preventDefault();
+                ShowLoadingModal();
                 if(
                     (profileAccountButtonsState.emailButton ||
                     profileAccountButtonsState.phoneNumberButton ||
@@ -35,42 +36,47 @@ const ProfileAccount = () => {
                     profileAccountButtonsState.postalCodeButton ||
                     profileAccountButtonsState.countryButton)
                 ) {
+                    CloseLoadingModal();
                     ShowErrorModal({data:"Please confirm all of your changes"});
-                }
-                fetch(`/updateUser/${currentUserData.data.uid}`, {
-                    method: 'PATCH',
-                    headers: {
-                        Accept: "application/json",
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email:document.getElementById("changeEmail").value,
-                        phoneNumber:document.getElementById("changePhone").value,
-                        firstName:document.getElementById("changeFirstName").value,
-                        lastName:document.getElementById("changeLastName").value,
-                        address:document.getElementById("changeAddress").value,
-                        city:document.getElementById("changeCity").value,
-                        postalCode:document.getElementById("changePostalCode").value,
-                        country:document.getElementById("changeCountry").value
-                    })
-                })
-                .then(res => res.json())
-                .then((data) => {
-                    if(data.status === "success") {
-                        const auth = getAuth();
-                        signOut(auth)
-                        .then(() => {
-                            // Sign-out successful.
-                            history.push("/");
-                            updateCurrentUserData({data:null,exists:false});
+                } else {
+                    fetch(`/updateUser/${currentUserData.data.uid}`, {
+                        method: 'PATCH',
+                        headers: {
+                            Accept: "application/json",
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email:document.getElementById("changeEmail").value,
+                            phoneNumber:document.getElementById("changePhone").value,
+                            firstName:document.getElementById("changeFirstName").value,
+                            lastName:document.getElementById("changeLastName").value,
+                            address:document.getElementById("changeAddress").value,
+                            city:document.getElementById("changeCity").value,
+                            postalCode:document.getElementById("changePostalCode").value,
+                            country:document.getElementById("changeCountry").value
                         })
-                        .catch((err) => {
-                            console.log(err);
-                        });
-                    } else {
-                        ShowErrorModal({data:data.error});
-                    } 
-                })
+                    })
+                    .then(res => res.json())
+                    .then((data) => {
+                        if(data.status === "success") {
+                            const auth = getAuth();
+                            signOut(auth)
+                            .then(() => {
+                                // Sign-out successful.
+                                CloseLoadingModal();
+                                history.push("/");
+                                updateCurrentUserData({data:null,exists:false});
+                            })
+                            .catch((err) => {
+                                CloseLoadingModal();
+                                ShowErrorModal({data:err.message});
+                            });
+                        } else {
+                            CloseLoadingModal();
+                            ShowErrorModal({data:data.error});
+                        } 
+                    })
+                }
             }}
             >
                 <Container>

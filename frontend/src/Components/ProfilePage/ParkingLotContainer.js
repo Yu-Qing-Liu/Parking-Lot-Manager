@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { GlobalStates } from "../../GlobalStates";
 import { useContext, useEffect } from "react";
 import { ModalStateContext } from "../../ModalStateContext";
-import { CircularProgress } from "@mui/material";
 import ParkingLot from "./ParkingLot";
 
 const ParkingLotContainer = () => {
@@ -48,9 +47,7 @@ const ParkingLotContainer = () => {
         )
     } else {
         return(
-            <LoadingContainer>
-                <CircularProgress size={"2vw"}></CircularProgress>
-            </LoadingContainer>
+            <></>
         )
     }
     
