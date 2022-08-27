@@ -42,6 +42,22 @@ const AvailabilitiesForm = () => {
             .then(res => res.json())
             .then((data) => {
                 if(data.status === "success") {
+                    document.getElementById("monday").checked  = false;
+                    document.getElementById("tuesday").checked  = false;
+                    document.getElementById("wednesday").checked  = false;
+                    document.getElementById("thursday").checked  = false;
+                    document.getElementById("friday").checked  = false;
+                    document.getElementById("saturday").checked  = false;
+                    document.getElementById("sunday").checked  = false;
+                    updateParkingLotDays({
+                        monday:false,
+                        tuesday:false,
+                        wednesday:false,
+                        thursday:false,
+                        friday:false,
+                        saturday:false,
+                        sunday:false,
+                    })
                     CloseLoadingModal();
                 } else {
                     CloseLoadingModal();

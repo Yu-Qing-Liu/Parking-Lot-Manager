@@ -13,10 +13,11 @@ const ParkingLotContainer = () => {
     } = useContext(GlobalStates);
 
     const {
-        actions:{ShowErrorModal,CloseLoadingModal},
+        actions:{ShowErrorModal,CloseLoadingModal,ShowLoadingModal},
     } = useContext(ModalStateContext)
 
     useEffect(() => {
+        ShowLoadingModal();
         fetch(`/getParkingLots/${currentUserData.data.uid}`)
         .then(res => res.json())
         .then((data) => {
