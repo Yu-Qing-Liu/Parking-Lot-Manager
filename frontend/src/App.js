@@ -7,6 +7,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { GlobalStates } from "./GlobalStates";
 import { ModalStateContextProvider } from "./ModalStateContext";
 import { useContext, useEffect } from "react";
+import LoadingModal from "./Components/Modals/LoadingModal";
+import ErrorModal from "./Components/Modals/ErrorModal";
 
 
 const firebaseConfig = {
@@ -41,6 +43,8 @@ const App = () => {
     <BrowserRouter>
       <ModalStateContextProvider>
         <Header></Header>
+        <LoadingModal></LoadingModal>
+        <ErrorModal></ErrorModal>
         <Switch>
           <Route exact path="/">
             <HomePage></HomePage>

@@ -11,7 +11,7 @@ const SignInModal = () => {
 
     const {
         state:{DisplaySignInModal},
-        actions:{CloseSignInModal,ShowRegistrationModal,ShowErrorModal},
+        actions:{CloseSignInModal,ShowRegistrationModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
     } = useContext(ModalStateContext);
 
     return(
@@ -22,15 +22,18 @@ const SignInModal = () => {
             <Wrapper>
                 <Container onSubmit={(e) => {
                     e.preventDefault();
+                    ShowLoadingModal();
                     const auth = getAuth();
                     let email = document.getElementById("signInEmail").value;
                     let password = document.getElementById("signInPassword").value;
                     signInWithEmailAndPassword(auth,email,password)
                     .then((userCredentials) => {
+                        CloseLoadingModal();
                         CloseSignInModal();
                         history.push(`/profile/${userCredentials.user.uid}`);
                     })
                     .catch((err) => {
+                        CloseLoadingModal();
                         ShowErrorModal({data:"Sorry This Account does not exist"});
                     })
                 }}>

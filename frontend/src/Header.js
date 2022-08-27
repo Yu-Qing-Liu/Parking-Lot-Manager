@@ -11,7 +11,7 @@ const Header = () => {
     let history = useHistory();
 
     const {
-        actions:{ShowSignInModal},
+        actions:{ShowSignInModal,ShowLoadingModal,CloseLoadingModal},
     } = useContext(ModalStateContext);
 
     const {
@@ -38,10 +38,12 @@ const Header = () => {
                         <StyledLink1 to={"/"}>Home</StyledLink1>
                         <StyledButton onClick={(e) => {
                             e.preventDefault();
+                            ShowLoadingModal();
                             const auth = getAuth();
                             signOut(auth)
                             .then(() => {
                                 // Sign-out successful.
+                                CloseLoadingModal();
                                 history.push("/");
                                 updateCurrentUserData({data:null,exists:false});
                             })

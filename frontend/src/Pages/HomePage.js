@@ -12,7 +12,6 @@ const HomePage = () => {
         <>
             <SignInModal></SignInModal>
             <RegistrationModal></RegistrationModal>
-            <ErrorModal></ErrorModal>
             <SideBar></SideBar>
             <MapContainer>
                 {
