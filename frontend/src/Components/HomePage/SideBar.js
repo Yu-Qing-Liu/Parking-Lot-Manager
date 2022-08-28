@@ -6,11 +6,6 @@ const SideBar = () => {
     return(
         <StyledSideBar>
             <Container>
-                <StyledLabel>Search For A Location</StyledLabel>
-                <StyledBsSearch></StyledBsSearch>
-                <StyledInput placeholder={"Enter a location"}></StyledInput>
-            </Container>
-            <Container>
                 <StyledLabel>Filter Results Within A Certain Range</StyledLabel>
                 <RadioButtonContainer>
                     <label>50m</label>
@@ -29,17 +24,20 @@ const SideBar = () => {
 }
 
 const StyledSideBar = styled.div`
+    position: absolute;
     display: flex;
     flex-direction: column;
     width: 20vw;
-    height:93.4vh;
+    height:93.37vh;;
     box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 `
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 1vh;
 `
 
 const StyledLabel = styled.label`
@@ -50,28 +48,8 @@ const StyledLabel = styled.label`
     margin-top: 2vh;
 `
 
-const StyledBsSearch = styled(BsSearch)`
-    position: relative;
-    top:1.25vw;
-    left: 17.2vw;
-`
-
 const StyledLabel2 = styled.label`
     margin-left: 1vw;
-`
-
-const StyledInput = styled.input`
-    margin-left: 1vw;
-    border-width: 0;
-    font-size: x-large;
-    color:grey;
-    -webkit-box-shadow: 1px 1px 2px 0px #000000; 
-    box-shadow: 1px 1px 2px 0px #000000;
-    position: relative;
-    width: 17.5vw;
-    height: 4vh;
-    background-color: transparent;
-    top:-0.5vh;
 `
 
 const RadioButtonContainer = styled.div`

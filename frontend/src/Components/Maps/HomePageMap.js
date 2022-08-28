@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Map, { NavigationControl, GeolocateControl } from 'react-map-gl';
+import Map, { NavigationControl, GeolocateControl, Marker } from 'react-map-gl';
 import { GlobalStates } from "../../GlobalStates";
 import { useContext } from "react";
 import GeocoderControl from "./GeocoderControl";
@@ -25,9 +25,13 @@ const HomePageMap = () => {
                 mapStyle="mapbox://styles/mapbox/streets-v11"
                 mapboxAccessToken={TOKEN}
             >
+                <Marker
+                latitude={mapLocation.lat}
+                longitude={mapLocation.lng}
+                />
                 <NavigationControl position="bottom-right"/>
                 <GeolocateControl
-                    position="top-left"
+                    position="bottom-left"
                     trackUserLocation={(e) => {
                         updateMapLocation({lng:e.coords.longitude,lat:e.coords.latitude})
                     }}

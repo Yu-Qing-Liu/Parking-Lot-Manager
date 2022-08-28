@@ -6,16 +6,20 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 
-const GeocoderControl = ({}) => {
+const GeocoderControl = () => {
 
     const {
-        actions:updateMapLocation,
+        actions:{updateMapLocation},
     } = useContext(GlobalStates);
 
     const ctrl = new MapBoxGeocoder({
         accessToken:TOKEN,
+        marker:false,
+        
     })
-    useControl(() => ctrl)
+
+    useControl(() => ctrl);
+
     ctrl.on('result', (e) => {
         const coords = e.result.geometry.coordinates;
         updateMapLocation({lng:coords[0], lat:coords[1]});

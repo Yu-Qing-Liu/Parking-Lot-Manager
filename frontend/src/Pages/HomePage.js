@@ -19,10 +19,15 @@ const HomePage = () => {
 
 const MapContainer = styled.div`
     width:80vw;
-    height:93.4vh;
+    height:93.37vh;
     position:absolute;
     top:6.6vh;
     left: 20vw;
+    .mapboxgl-ctrl-geocoder {
+        position: absolute;
+        right:64vw;
+        z-index: 2;
+    }
 `
 
 export default HomePage;
