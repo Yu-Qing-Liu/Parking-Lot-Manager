@@ -32,7 +32,7 @@ const StyledSideBar = styled.div`
     display: flex;
     flex-direction: column;
     width: 20vw;
-    height:95vh;
+    height:93.4vh;
     box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.2);
 `
 

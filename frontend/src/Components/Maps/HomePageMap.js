@@ -1,25 +1,38 @@
 import styled from "styled-components";
-import Map from 'react-map-gl';
-import { GeolocateControl } from "react-map-gl";
+import Map, { NavigationControl, GeolocateControl } from 'react-map-gl';
+import { GlobalStates } from "../../GlobalStates";
+import { useContext } from "react";
+import GeocoderControl from "./GeocoderControl";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 
 const HomePageMap = () => {
 
+    const {
+        state:{mapLocation},
+        actions:{updateMapLocation},
+    } = useContext(GlobalStates);
+
     return(
         <>
             <Map
                 initialViewState={{
-                    longitude: -79.4512,
-                    latitude: 43.6568,
+                    longitude: mapLocation.lng,
+                    latitude: mapLocation.lat,
                     zoom:13,
                 }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapStyle="mapbox://styles/mapbox/streets-v11"
                 mapboxAccessToken={TOKEN}
             >
-                <GeolocateControl 
-                    
+                <NavigationControl position="bottom-right"/>
+                <GeolocateControl
+                    position="top-left"
+                    trackUserLocation={(e) => {
+                        updateMapLocation({lng:e.coords.longitude,lat:e.coords.latitude})
+                    }}
                 />
+                <GeocoderControl/>
             </Map>
         </>
     )

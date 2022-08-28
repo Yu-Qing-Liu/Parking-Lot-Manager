@@ -19,10 +19,10 @@ const HomePage = () => {
 
 const MapContainer = styled.div`
     width:80vw;
-    height:95vh;
+    height:93.4vh;
     position:absolute;
     top:6.6vh;
-    left: 20.1vw;
+    left: 20vw;
 `
 
 export default HomePage;

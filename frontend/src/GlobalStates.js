@@ -42,6 +42,10 @@ const initialState = {
     parkingLotsHasLoaded:false,
     parkingLots:[],
     refetchingParkingLots:false,
+    mapLocation:{
+        lng:-79.4512,
+        lat:43.6568
+    }
 }
 
 const reducer = (state, action) => {
@@ -120,6 +124,15 @@ const reducer = (state, action) => {
                 refetchingParkingLots:action.data,
             }
         }
+        case "update-map-location": {
+            return {
+                ...state,
+                mapLocation:{
+                    lng:action.lng,
+                    lat:action.lat,
+                }
+            }
+        }
     }
 }
 
@@ -175,6 +188,13 @@ export const GlobalStatesProvider = ({children}) => {
         })
     }
 
+    const updateMapLocation = (data) => {
+        dispatch({
+            type:"update-map-location",
+            ...data,
+        })
+    }
+
     return(
         <GlobalStates.Provider
             value = {{
@@ -187,7 +207,8 @@ export const GlobalStatesProvider = ({children}) => {
                     updateProfileAccountButtonsState,
                     updateParkingLotDays,
                     updateParkingLots,
-                    refetchParkingLots
+                    refetchParkingLots,
+                    updateMapLocation
                 },
             }}
         >
