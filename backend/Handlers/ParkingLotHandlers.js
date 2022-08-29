@@ -4,6 +4,13 @@ require("dotenv").config();
 const { MONGO_URI } = process.env;
 const options = {};
 const client = new MongoClient(MONGO_URI, options);
+const NodeGeocoder = require('node-geocoder');
+const geocoderOptions = {
+    provider:'opencage',
+    apiKey: 'dd8fcec81f00464b8a455f51a760657d',
+}
+
+const geocoder = NodeGeocoder(geocoderOptions);
 
 // Creates a Parking lot, takes the user's uid and links a parking lot to them
 const createParkingLot = async (req,res) => {
@@ -49,8 +56,9 @@ const createParkingLot = async (req,res) => {
     try {
         await client.connect();
 
-        //@Todo Forward geocode on parking lot location
-        
+        //Forward geocode on parking lot location
+        const locationData = await geocoder.geocode(`${address} ${city} ${country}`);
+        let coords = {longitude:locationData[0].longitude,latitude:locationData[0].latitude};
 
         // Create the parking lot
         await db2.collection("ParkingLotsData").insertOne(
@@ -59,7 +67,7 @@ const createParkingLot = async (req,res) => {
                 country:country,
                 city:city,
                 address:address,
-                //@Todo: coords:coords,
+                coords:coords,
                 startTime:startTime,
                 endTime:endTime,
                 days:availableDays,
@@ -152,15 +160,15 @@ const updateParkingLot = async(req,res) => {
     try {
         await client.connect();
 
-        //@Todo: Update parking lot's coordinates if required
+        //Update parking lot's coordinates if required
         if(address !== "" || city !== "" || country !== "") {
-            //@Todo: Forward geocode
+            const locationData = await geocoder.geocode(`${address} ${city} ${country}`);
+            let coords = {longitude:locationData[0].longitude,latitude:locationData[0].latitude};
+            await db.collection("ParkingLotsData").updateOne(
+                {_id:uid},
+                {$set: {coords:coords}}
+            )
         }
-
-        await db.collection("ParkingLotsData").updateOne(
-            {_id:uid},
-            {$set: {/*@Todo update coords in db*/}}
-        )
 
         //Loop through updates and perform updates
         for(let i = 0; i < updates.length; i++) {
