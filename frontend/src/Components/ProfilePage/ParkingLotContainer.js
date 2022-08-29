@@ -8,7 +8,7 @@ const ParkingLotContainer = () => {
 
     const {
         state:{parkingLotsHasLoaded,parkingLots,currentUserData,refetchingParkingLots},
-        actions:{updateParkingLots},
+        actions:{updateParkingLots,updateAllParkingLotsData},
     } = useContext(GlobalStates);
 
     const {
@@ -22,10 +22,21 @@ const ParkingLotContainer = () => {
         .then((data) => {
             if(data.status === "success") {
                 updateParkingLots({data:data.data});
-                CloseLoadingModal();
+                fetch("/getAllParkingLots")
+                .then(res => res.json())
+                .then((data) => {
+                    if(data.status === "success") {
+                        updateAllParkingLotsData({data:data.parkingLots});
+                        CloseLoadingModal();
+                    } else {
+                        CloseLoadingModal();
+                        ShowErrorModal({data:data.error});
+                    }
+                })
+                
             } else {
                 CloseLoadingModal();
-                ShowErrorModal({data:data.error})
+                ShowErrorModal({data:data.error});
             }
         })
     }, [refetchingParkingLots]);

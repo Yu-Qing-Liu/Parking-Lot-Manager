@@ -20,22 +20,32 @@ const firebaseConfig = {
   appId: "1:58417145784:web:e22f1e539a2ed9fb9ed14d"
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const App = () => {
 
   const {
-    actions:{updateCurrentUserData}
+    actions:{updateCurrentUserData,updateAllParkingLotsData}
   } = useContext(GlobalStates);
 
   const auth = getAuth();
-  useEffect(() => {
+  useEffect(() => {
+    // Check if a user is signed in, and log them in in accordance.
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
         updateCurrentUserData({data:user,exists:true});
       }
     });
+  },[])
+
+  useEffect(() => {
+    // Fetch all the parking lots data in order to map
+    fetch("/getAllParkingLots")
+    .then(res => res.json())
+    .then((data) => {
+      updateAllParkingLotsData({data:data.parkingLots});
+    })
   },[])
 
   return (

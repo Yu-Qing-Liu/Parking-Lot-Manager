@@ -3,6 +3,7 @@ import { useReducer, createContext } from "react";
 export const GlobalStates = createContext();
 
 const initialState = {
+    allParkingLotsData:null,
     currentUserData:{
         hasLoaded:false,
         data:null,
@@ -50,6 +51,12 @@ const initialState = {
 
 const reducer = (state, action) => {
     switch(action.type) {
+        case "update-all-parking-lots-data": {
+            return {
+                ...state,
+                allParkingLotsData:action.data,
+            }
+        }
         case "update-current-user-data": {
             return {
                 ...state,
@@ -139,6 +146,13 @@ const reducer = (state, action) => {
 export const GlobalStatesProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const updateAllParkingLotsData = (data) => {
+        dispatch({
+            type:"update-all-parking-lots-data",
+            ...data,
+        })
+    }
+
     const updateCurrentUserData = (data) => {
         dispatch({
             type:"update-current-user-data",
@@ -208,7 +222,8 @@ export const GlobalStatesProvider = ({children}) => {
                     updateParkingLotDays,
                     updateParkingLots,
                     refetchParkingLots,
-                    updateMapLocation
+                    updateMapLocation,
+                    updateAllParkingLotsData
                 },
             }}
         >
