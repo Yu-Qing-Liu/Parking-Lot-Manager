@@ -216,9 +216,24 @@ const deleteParkingLot = async(req,res) => {
     }
 }
 
+//Gets a list of all the coordinates of all the parking lots
+const getAllParkingLots = async(req,res) => {
+    const db = client.db("ParkingLots");
+    try {
+        await client.connect();
+        const parkingLots = await db.collection("ParkingLotsData").find().toArray();
+        res.status(200).json({status:"success", parkingLots});
+        client.close();
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message})
+    }
+}
+
 module.exports = {
     createParkingLot,
     getParkingLots,
     updateParkingLot,
-    deleteParkingLot
+    deleteParkingLot,
+    getAllParkingLots,
 }
