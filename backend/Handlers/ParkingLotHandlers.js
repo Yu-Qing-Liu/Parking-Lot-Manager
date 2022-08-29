@@ -48,6 +48,10 @@ const createParkingLot = async (req,res) => {
 
     try {
         await client.connect();
+
+        //@Todo Forward geocode on parking lot location
+        
+
         // Create the parking lot
         await db2.collection("ParkingLotsData").insertOne(
             {
@@ -55,6 +59,7 @@ const createParkingLot = async (req,res) => {
                 country:country,
                 city:city,
                 address:address,
+                //@Todo: coords:coords,
                 startTime:startTime,
                 endTime:endTime,
                 days:availableDays,
@@ -74,7 +79,7 @@ const createParkingLot = async (req,res) => {
     }
 }
 
-//Fetches all the parking lots that A user owns
+//Fetches all the parking lots that a user owns
 const getParkingLots = async(req,res) => {
     const uid = req.params.uid;
     const db1 = client.db("Users");
@@ -146,6 +151,17 @@ const updateParkingLot = async(req,res) => {
 
     try {
         await client.connect();
+
+        //@Todo: Update parking lot's coordinates if required
+        if(address !== "" || city !== "" || country !== "") {
+            //@Todo: Forward geocode
+        }
+
+        await db.collection("ParkingLotsData").updateOne(
+            {_id:uid},
+            {$set: {/*@Todo update coords in db*/}}
+        )
+
         //Loop through updates and perform updates
         for(let i = 0; i < updates.length; i++) {
             await db.collection("ParkingLotsData").updateOne(

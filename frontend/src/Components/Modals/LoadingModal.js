@@ -11,7 +11,7 @@ const LoadingModal = () => {
 
     return(
         <Backdrop
-        sx = {{zIndex: (theme) => theme.zIndex.drawer + 1}}
+        sx = {{zIndex: 1301}}
         open = {DisplayLoadingModal}
         >
             <CircularProgress color="inherit" />
