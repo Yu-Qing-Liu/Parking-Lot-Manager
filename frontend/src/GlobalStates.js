@@ -3,6 +3,7 @@ import { useReducer, createContext } from "react";
 export const GlobalStates = createContext();
 
 const initialState = {
+    allParkingLotsDataHasLoaded:false,
     allParkingLotsData:null,
     currentUserData:{
         hasLoaded:false,
@@ -54,6 +55,7 @@ const reducer = (state, action) => {
         case "update-all-parking-lots-data": {
             return {
                 ...state,
+                allParkingLotsDataHasLoaded:true,
                 allParkingLotsData:action.data,
             }
         }
