@@ -254,7 +254,7 @@ const addAppointment = async (req,res) => {
     }
 }
 
-//Clears all appointments that have expired from all parking lots
+//Cron job that clears all appointments that have expired from all parking lots -- used in mongodb
 const clearExpiredAppointments = async (req,res) => {
     const db = client.db("ParkingLots");
     const today = moment();
