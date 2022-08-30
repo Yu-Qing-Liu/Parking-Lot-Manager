@@ -9,7 +9,6 @@ import { useContext } from "react";
 import GeocoderControl from "./GeocoderControl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { ModalStateContext } from "../../ModalStateContext";
-import { GiPositionMarker } from "react-icons/gi";
 
 const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 

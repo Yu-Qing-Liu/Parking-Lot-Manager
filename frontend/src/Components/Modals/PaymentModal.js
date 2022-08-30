@@ -15,14 +15,10 @@ const PaymentModal = () => {
         actions:{ClosePaymentModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
     } = useContext(ModalStateContext);
 
-    const {
-        state:{refetchingParkingLots},
-        actions:{refetchParkingLots},
-    } = useContext(GlobalStates);
-
     const [value, setValue] = useState(new Date());
 
     if(PaymentModalData !== null) {
+        console.log(PaymentModalData.bookedDates);
         return(
             <Dialog
             open = {DisplayPaymentModal}
@@ -35,12 +31,19 @@ const PaymentModal = () => {
                         <Calendar 
                         value={value}
                         onChange={setValue}
-                        mapDays={({ date }) => {
+                        mapDays={({ date, today, isSameDate }) => {
                             let props ={}
+                            // Disable dates by default
                             props.style = {
                                 color:"red",
                             }
                             props.disabled = true;
+                            // Style the current day
+                            if (isSameDate(date, today)) {
+                                props.style.color = "darkgreen"
+                                props.style.backgroundColor = "lightGreen"
+                            }
+                            // Method to style/enable dates based on days
                             let dayStrings = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
                             let styleDay = (dayString) => {
                                 if(date.toDate().toDateString().split(" ")[0] === dayString) {
@@ -51,6 +54,7 @@ const PaymentModal = () => {
                                     props.disabled = false;
                                 }
                             }
+                            // Enable parking lot available dates
                             PaymentModalData.days.forEach((day) => {
                                 if(day === "monday") {
                                     styleDay(dayStrings[0]);
@@ -67,7 +71,18 @@ const PaymentModal = () => {
                                 } else if (day === "sunday") {
                                     styleDay(dayStrings[6]);
                                 }
-                            }) 
+                            })
+                            // Disable bookedDays
+                            PaymentModalData.bookedDates.forEach((appoitment) => {
+                                if(appoitment.date === moment(date.toString()).format('dddd DD MMMM YYYY')) {
+                                    props.disabled = true;
+                                    props.style = {
+                                        color:"black",
+                                        backgroundColor:"yellow",
+                                    }
+                                }
+                            })
+
                             return props;
                         }}
                         />
@@ -82,7 +97,13 @@ const PaymentModal = () => {
                     </CalendarContainer>
                     <Styledh4>Select Date:</Styledh4>
                     <StyledDate>{moment(value.toString()).format('dddd DD MMMM YYYY')}</StyledDate>
-                    <PaymentForm date={value} uid={PaymentModalData._id}></PaymentForm>
+                    <PaymentForm 
+                        date={moment(value.toString()).format('dddd DD MMMM YYYY')} 
+                        uid={PaymentModalData._id}
+                        availableDates={PaymentModalData.days}
+                        appoitments={PaymentModalData.bookedDates}
+                    >
+                    </PaymentForm>
                 </Wrapper>
             </Dialog>
         )

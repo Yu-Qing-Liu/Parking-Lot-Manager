@@ -62,6 +62,7 @@ const Container = styled.div`
 
 const Styledp = styled.p`
     font-size:large;
+    margin-right: 1vw;
 `
 
 export default ErrorModal;

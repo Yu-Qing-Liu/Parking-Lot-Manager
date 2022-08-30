@@ -1,8 +1,14 @@
 import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from "react";
+import { GlobalStates } from "../../GlobalStates";
+import moment from "moment";
 
-const PaymentForm = ({date,uid}) => {
+const PaymentForm = ({date,uid,availableDates,appoitments}) => {
+
+    const {
+        actions:{updateAllParkingLotsData}
+    } = useContext(GlobalStates);
 
     const {
         actions:{ClosePaymentModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
@@ -12,31 +18,66 @@ const PaymentForm = ({date,uid}) => {
         <StyledForm
             onSubmit={(e) => {
                 e.preventDefault();
-                ShowLoadingModal();
-                //Add date to booked dates
-                fetch(`/addAppointment/${uid}`, {
-                    method: 'POST',
-                    headers: {
-                        Accept: "application/json",
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        date:date,
-                    })
-                })
-                .then(res => res.json())
-                .then((data) => {
-                    if(data.status === "success") {
-                        CloseLoadingModal();
-                    } else {
-                        CloseLoadingModal();
-                        ShowErrorModal({data:data.error});
+                //Perform validations on date
+                const today = moment();
+                let valid = false;
+                for(let i = 0; i < availableDates.length; i++) {
+                    if(date.toLowerCase().includes(availableDates[i])) {
+                        valid = true;
+                        break;
+                    }
+                }
+                appoitments.forEach((appoitment) => {
+                    if(appoitment.date === date) {
+                        valid = false;
                     }
                 })
-                .catch((err) => {
-                    CloseLoadingModal();
-                    ShowErrorModal({data:err.message});
-                })
+                if(!valid) {
+                    ShowErrorModal({data:"Sorry, this day isn't available"});
+                } else if(moment(date).isBefore(today)) {
+                    ShowErrorModal({data:"Sorry, this day isn't available, the date you have selected is in the past"});
+                } else {
+                    ShowLoadingModal();
+                    //Add date to booked dates
+                    fetch(`/addAppointment/${uid}`, {
+                        method: 'POST',
+                        headers: {
+                            Accept: "application/json",
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            date:date,
+                        })
+                    })
+                    .then(res => res.json())
+                    .then((data) => {
+                        if(data.status === "success") {
+                            fetch("/getAllParkingLots")
+                            .then(res => res.json())
+                            .then((data) => {
+                                if(data.status === "success") {
+                                    updateAllParkingLotsData({data:data.parkingLots});
+                                    CloseLoadingModal();
+                                    ClosePaymentModal();
+                                } else {
+                                    CloseLoadingModal();
+                                    ShowErrorModal({data:data.error});
+                                }
+                            })
+                            .catch((err) => {
+                                CloseLoadingModal();
+                                ShowErrorModal({data:err.message});
+                            })
+                        } else {
+                            CloseLoadingModal();
+                            ShowErrorModal({data:data.error});
+                        }
+                    })
+                    .catch((err) => {
+                        CloseLoadingModal();
+                        ShowErrorModal({data:err.message});
+                    })
+                }
             }}
         >
             <Wrapper>

@@ -44,7 +44,14 @@ const App = () => {
     fetch("/getAllParkingLots")
     .then(res => res.json())
     .then((data) => {
-      updateAllParkingLotsData({data:data.parkingLots});
+      if(data.status === "success") {
+        updateAllParkingLotsData({data:data.parkingLots});
+      } else {
+        console.log(data.error);
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
     })
   },[])
 
