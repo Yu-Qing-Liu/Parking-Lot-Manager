@@ -17,8 +17,18 @@ const ProfileParkingLot = () => {
             <CalendarContainer>
                 <Calendar 
                 value={value}
-                mapDays={({ date }) => {
+                mapDays={({ date, today, isSameDate }) => {
                     let props ={}
+                    // Disable dates by default
+                    props.style = {
+                        color:"black",
+                    }
+                    // Style the current day
+                    if (isSameDate(date, today)) {
+                        props.style.color = "darkgreen"
+                        props.style.backgroundColor = "lightGreen"
+                    }
+                    props.disabled = true;
                     let dayStrings = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
                     let styleDay = (dayString) => {
                         if(date.toDate().toDateString().split(" ")[0] === dayString) {

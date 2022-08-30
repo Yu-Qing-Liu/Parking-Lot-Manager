@@ -2,7 +2,6 @@ import { Dialog } from "@mui/material";
 import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from 'react';
-import { GlobalStates } from "../../GlobalStates";
 import { Calendar } from "react-multi-date-picker";
 import { useState } from "react";
 import PaymentForm from "../HomePage/PaymentForm";
@@ -12,7 +11,7 @@ const PaymentModal = () => {
 
     const {
         state:{DisplayPaymentModal,PaymentModalData},
-        actions:{ClosePaymentModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
+        actions:{ClosePaymentModal},
     } = useContext(ModalStateContext);
 
     const [value, setValue] = useState(new Date());

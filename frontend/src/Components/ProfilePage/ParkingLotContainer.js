@@ -75,14 +75,6 @@ const Wrapper = styled.div`
     align-items: flex-start;
 `
 
-const LoadingContainer = styled.div`
-    width: 50vw;
-    height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
 const Container = styled.div`
     background-color: white;
     width: 50vw;
