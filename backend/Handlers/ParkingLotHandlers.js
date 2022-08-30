@@ -11,6 +11,7 @@ const geocoderOptions = {
 }
 
 const geocoder = NodeGeocoder(geocoderOptions);
+const moment = require('moment');
 
 // Creates a Parking lot, takes the user's uid and links a parking lot to them
 const createParkingLot = async (req,res) => {
@@ -215,7 +216,7 @@ const deleteParkingLot = async(req,res) => {
     }
 }
 
-//Gets a list of all the coordinates of all the parking lots
+//Gets a list of all the parking lots with their information
 const getAllParkingLots = async(req,res) => {
     const db = client.db("ParkingLots");
     try {
@@ -253,6 +254,40 @@ const addAppointment = async (req,res) => {
     }
 }
 
+//Clears all appointments that have expired from all parking lots
+const clearExpiredAppointments = async (req,res) => {
+    const db = client.db("ParkingLots");
+    const today = moment();
+    try {
+        await client.connect();
+        const parkingLots = await db.collection("ParkingLotsData").find().toArray();
+        const appointmentsToBeDeleted = [];
+
+        // Get all of the appointments from all the parking lots
+        const appointments = parkingLots.map((parkingLot) => {
+            return parkingLot.bookedDates;
+        }).flat();
+
+        // Flag appointments for deletion
+        appointments.forEach((appointment) => {
+            if(moment(appointment.date).isBefore(today)) {
+                appointmentsToBeDeleted.push(appointment);
+            }
+        })
+
+        // Delete the appointments
+        await db.collection("ParkingLotsData").updateMany(
+            {},
+            {$pull: {bookedDates: {$in: appointmentsToBeDeleted}}}
+        )
+
+        res.status(200).json({status:"success"})
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message})
+    }
+}
+
 module.exports = {
     createParkingLot,
     getParkingLots,
@@ -260,4 +295,5 @@ module.exports = {
     deleteParkingLot,
     getAllParkingLots,
     addAppointment,
+    clearExpiredAppointments,
 }
