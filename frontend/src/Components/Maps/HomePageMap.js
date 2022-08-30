@@ -9,6 +9,7 @@ import { useContext } from "react";
 import GeocoderControl from "./GeocoderControl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { ModalStateContext } from "../../ModalStateContext";
+import { GiPositionMarker } from "react-icons/gi";
 
 const TOKEN = process.env.REACT_APP_MapboxAccessToken;
 
@@ -25,10 +26,11 @@ const HomePageMap = () => {
 
     if(allParkingLotsDataHasLoaded) {
 
-        let pins = allParkingLotsData.map((parkingLot, index) => {
+        let markers = allParkingLotsData.map((parkingLot, index) => {
             return(
                 <Marker
                 key={`marker-${index}`}
+                scale={0.75}
                 longitude={parkingLot.coords.longitude}
                 latitude={parkingLot.coords.latitude}
                 anchor="bottom"
@@ -47,15 +49,18 @@ const HomePageMap = () => {
                     initialViewState={{
                         longitude: mapLocation.lng,
                         latitude: mapLocation.lat,
-                        zoom:13,
+                        zoom:3,
                     }}
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     mapboxAccessToken={TOKEN}
                 >
                     <Marker
+                    color={"#008b02"}
+                    scale={0.5}
                     latitude={mapLocation.lat}
                     longitude={mapLocation.lng}
-                    />
+                    >
+                    </Marker>
                     <NavigationControl position="bottom-right"/>
                     <GeolocateControl
                         position="bottom-left"
@@ -64,7 +69,7 @@ const HomePageMap = () => {
                         }}
                     />
                     <GeocoderControl/>
-                    {pins}
+                    {markers}
                 </Map>
             </>
         )
