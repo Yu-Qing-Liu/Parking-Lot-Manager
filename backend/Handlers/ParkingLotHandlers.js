@@ -12,6 +12,7 @@ const geocoderOptions = {
 
 const geocoder = NodeGeocoder(geocoderOptions);
 const moment = require('moment');
+const cron = require('node-cron');
 
 // Creates a Parking lot, takes the user's uid and links a parking lot to them
 const createParkingLot = async (req,res) => {
@@ -254,8 +255,8 @@ const addAppointment = async (req,res) => {
     }
 }
 
-//Cron job that clears all appointments that have expired from all parking lots -- used in mongodb
-const clearExpiredAppointments = async (req,res) => {
+//Cron task that clears all appointments that have expired from all parking lots, runs every monday at midnight
+cron.schedule('0 0 * * 1', async () => {
     const db = client.db("ParkingLots");
     const today = moment();
     try {
@@ -280,13 +281,13 @@ const clearExpiredAppointments = async (req,res) => {
             {},
             {$pull: {bookedDates: {$in: appointmentsToBeDeleted}}}
         )
-
-        res.status(200).json({status:"success"})
+        console.log("success");
+        client.close();
     } catch (err) {
         client.close();
-        res.status(400).json({status:"error", error:err.message})
+        console.log(err);
     }
-}
+});
 
 module.exports = {
     createParkingLot,
@@ -295,5 +296,4 @@ module.exports = {
     deleteParkingLot,
     getAllParkingLots,
     addAppointment,
-    clearExpiredAppointments,
 }
