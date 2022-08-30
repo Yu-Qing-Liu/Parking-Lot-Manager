@@ -17,7 +17,7 @@ const ProfileParkingLot = () => {
             <CalendarContainer>
                 <Calendar 
                 value={value}
-                mapDays={({ date, isSameDate }) => {
+                mapDays={({ date }) => {
                     let props ={}
                     let dayStrings = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
                     let styleDay = (dayString) => {
