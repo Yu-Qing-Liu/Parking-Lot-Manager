@@ -10,6 +10,8 @@ const initialState = {
     DisplayEditParkingLotModal:false,
     EditParkingLotModalData:null,
     DisplayLoadingModal:false,
+    PaymentModalData:null,
+    DisplayPaymentModal:false,
 }
 
 const reducer = (state, action) => {
@@ -78,6 +80,20 @@ const reducer = (state, action) => {
                 DisplayLoadingModal:false,
             }
         }
+        case 'show-payment-modal': {
+            return {
+                ...state,
+                DisplayPaymentModal:true,
+                PaymentModalData:action.data,
+            }
+        }
+        case 'close-payment-modal': {
+            return {
+                ...state,
+                DisplayPaymentModal:false,
+                PaymentModalData:null,
+            }
+        }
     }
 }
 
@@ -140,6 +156,19 @@ export const ModalStateContextProvider = ({children}) => {
         })
     }
 
+    const ShowPaymentModal = (data) => {
+        dispatch({
+            type:"show-payment-modal",
+            ...data
+        })
+    }
+
+    const ClosePaymentModal = () => {
+        dispatch({
+            type:"close-payment-modal",
+        })
+    }
+
     return(
         <ModalStateContext.Provider
             value = {{
@@ -156,6 +185,8 @@ export const ModalStateContextProvider = ({children}) => {
                     CloseEditParkingLotModal,
                     ShowLoadingModal,
                     CloseLoadingModal,
+                    ShowPaymentModal,
+                    ClosePaymentModal,
                 },
             }}
         >

@@ -21,7 +21,7 @@ const HomePageMap = () => {
     } = useContext(GlobalStates);
 
     const {
-        actions:{ShowErrorModal},
+        actions:{ShowPaymentModal},
     } = useContext(ModalStateContext);
 
     if(allParkingLotsDataHasLoaded) {
@@ -36,7 +36,7 @@ const HomePageMap = () => {
                 anchor="bottom"
                 onClick = {(e) => {
                     e.originalEvent.stopPropagation();
-                    ShowErrorModal({data:"Test"});
+                    ShowPaymentModal({data:parkingLot});
                 }}
                 >
                 </Marker>

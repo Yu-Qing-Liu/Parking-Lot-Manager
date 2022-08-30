@@ -3,10 +3,12 @@ import SideBar from "../Components/HomePage/SideBar";
 import SignInModal from "../Components/Modals/SignInModal";
 import RegistrationModal from "../Components/Modals/RegistrationModal";
 import HomePageMap from "../Components/Maps/HomePageMap";
+import PaymentModal from "../Components/Modals/PaymentModal";
 
 const HomePage = () => {
     return(
         <>
+            <PaymentModal></PaymentModal>
             <SignInModal></SignInModal>
             <RegistrationModal></RegistrationModal>
             <SideBar></SideBar>
