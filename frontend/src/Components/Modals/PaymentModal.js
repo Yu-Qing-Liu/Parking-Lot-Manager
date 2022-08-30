@@ -19,6 +19,7 @@ const PaymentModal = () => {
     } = useContext(GlobalStates);
 
     if(PaymentModalData !== null) {
+        console.log(PaymentModalData);
         return(
             <Dialog
             open = {DisplayPaymentModal}

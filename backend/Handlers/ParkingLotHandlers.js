@@ -72,6 +72,7 @@ const createParkingLot = async (req,res) => {
                 endTime:endTime,
                 days:availableDays,
                 price:price,
+                bookedDates:[],
             }
         )
         // Link the parkingLotId to the user
