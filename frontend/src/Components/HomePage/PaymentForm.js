@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from "react";
 
-const PaymentForm = ({date}) => {
+const PaymentForm = ({date,uid}) => {
 
     const {
         actions:{ClosePaymentModal,ShowErrorModal,ShowLoadingModal,CloseLoadingModal},
@@ -12,7 +12,31 @@ const PaymentForm = ({date}) => {
         <StyledForm
             onSubmit={(e) => {
                 e.preventDefault();
+                ShowLoadingModal();
                 //Add date to booked dates
+                fetch(`/addAppointment/${uid}`, {
+                    method: 'POST',
+                    headers: {
+                        Accept: "application/json",
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date:date,
+                    })
+                })
+                .then(res => res.json())
+                .then((data) => {
+                    if(data.status === "success") {
+                        CloseLoadingModal();
+                    } else {
+                        CloseLoadingModal();
+                        ShowErrorModal({data:data.error});
+                    }
+                })
+                .catch((err) => {
+                    CloseLoadingModal();
+                    ShowErrorModal({data:err.message});
+                })
             }}
         >
             <Wrapper>

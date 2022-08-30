@@ -23,7 +23,6 @@ const PaymentModal = () => {
     const [value, setValue] = useState(new Date());
 
     if(PaymentModalData !== null) {
-        console.log(PaymentModalData);
         return(
             <Dialog
             open = {DisplayPaymentModal}
@@ -83,7 +82,7 @@ const PaymentModal = () => {
                     </CalendarContainer>
                     <Styledh4>Select Date:</Styledh4>
                     <StyledDate>{moment(value.toString()).format('dddd DD MMMM YYYY')}</StyledDate>
-                    <PaymentForm date={value}></PaymentForm>
+                    <PaymentForm date={value} uid={PaymentModalData._id}></PaymentForm>
                 </Wrapper>
             </Dialog>
         )
@@ -104,7 +103,7 @@ const StyledTitle = styled.h1`
     text-align: center;
 `
 
-const Wrapper = styled.form`
+const Wrapper = styled.div`
     width: 35vw;
     height: 80vh;
 `

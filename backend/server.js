@@ -21,6 +21,7 @@ const {
     updateParkingLot,
     deleteParkingLot,
     getAllParkingLots,
+    addAppointment,
 } = require("./Handlers/ParkingLotHandlers");
 
 app.use(morgan("tiny"))
@@ -45,6 +46,7 @@ app.get("/getParkingLots/:uid", getParkingLots);
 app.patch("/updateParkingLot/:uid", updateParkingLot);
 app.delete("/deleteParkingLot/:uid", deleteParkingLot);
 app.get("/getAllParkingLots", getAllParkingLots);
+app.post("/addAppointment/:uid", addAppointment);
 
 
 /*↑↑↑ Endpoints ↑↑↑*/ 

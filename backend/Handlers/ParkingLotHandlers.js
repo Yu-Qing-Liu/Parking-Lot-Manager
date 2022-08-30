@@ -229,10 +229,35 @@ const getAllParkingLots = async(req,res) => {
     }
 }
 
+//Adds an appointment to a parking lot
+const addAppointment = async (req,res) => {
+    const uid = req.params.uid;
+    const date = req.body.date;
+    const appointmentuid = uuidv4();
+    const db = client.db("ParkingLots");
+    try {
+        await client.connect();
+        let newAppointment = {
+            id:appointmentuid,
+            date:date
+        }
+        await db.collection("ParkingLotsData").updateOne(
+            {_id:uid},
+            {$push: {bookedDates:newAppointment}},
+        );
+        res.status(200).json({status:"success"})
+        client.close();
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message})
+    }
+}
+
 module.exports = {
     createParkingLot,
     getParkingLots,
     updateParkingLot,
     deleteParkingLot,
     getAllParkingLots,
+    addAppointment,
 }
