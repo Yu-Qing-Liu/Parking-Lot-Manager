@@ -25,7 +25,7 @@ const HomePageMap = () => {
 
     if(allParkingLotsDataHasLoaded) {
 
-        const pins = allParkingLotsData.map((parkingLot, index) => {
+        let pins = allParkingLotsData.map((parkingLot, index) => {
             return(
                 <Marker
                 key={`marker-${index}`}
