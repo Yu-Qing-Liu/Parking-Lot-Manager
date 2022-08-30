@@ -6,8 +6,8 @@ const options = {};
 const client = new MongoClient(MONGO_URI, options);
 const NodeGeocoder = require('node-geocoder');
 const geocoderOptions = {
-    provider:'opencage',
-    apiKey: 'dd8fcec81f00464b8a455f51a760657d',
+    provider:'mapbox',
+    apiKey: process.env.MapboxAccessToken,
 }
 
 const geocoder = NodeGeocoder(geocoderOptions);
@@ -152,7 +152,6 @@ const updateParkingLot = async(req,res) => {
     let updates = [];
     data.forEach((dataObj) => {
         if(Object.values(dataObj).toString() !== "" && Object.values(dataObj).toString() !== "NaN") {
-            console.log(Object.values(dataObj).toString());
             updates.push(dataObj);
         }
     })
@@ -195,7 +194,6 @@ const deleteParkingLot = async(req,res) => {
         await client.connect();
         //Check if parking lot exists
         const parkingLot = await db1.collection("ParkingLotsData").findOne({_id:uid});
-        console.log(parkingLot);
         if(parkingLot === null) {
             throw new Error("The parking lot does not exist");
         }
