@@ -12,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .vscode/
+serviceAccountKey.json
 
 # Environments
 .env
