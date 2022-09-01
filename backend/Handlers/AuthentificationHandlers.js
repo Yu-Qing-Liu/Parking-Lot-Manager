@@ -15,6 +15,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 })
 
+// Creates a user
 const createUser = async (req,res) => {
     let address = req.body.address
     let phoneNumber = req.body.phoneNumber
@@ -47,6 +48,8 @@ const createUser = async (req,res) => {
                 postalCode:"Not set yet",
                 country:"Not set yet",
                 parkingLotId:[],
+                balance:0,
+                withdrawableBalance:0,
             });
             client.close();
             res.status(200).json({
@@ -60,6 +63,21 @@ const createUser = async (req,res) => {
         
     }
 
+}
+
+// Retreives the data from one user by uid
+const getUser = async (req,res) => {
+    const uid = req.params.uid;
+    try {
+        await client.connect();
+        const db = client.db("Users");
+        const userData = await db.collection("UserData").findOne({_id:uid});
+        res.status(200).json({status:"success", userData});
+        client.close();
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message});
+    }
 }
 
 // Gets all the existing users
@@ -175,4 +193,5 @@ module.exports = {
     getAllUsers,
     deleteUser,
     updateUser,
+    getUser,
 }

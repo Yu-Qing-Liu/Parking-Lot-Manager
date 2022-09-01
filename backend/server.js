@@ -9,11 +9,8 @@ const {
     getAllUsers,
     deleteUser,
     updateUser,
-} = require("./Handlers/AuthentificationHandlers");
-
-const {
     getUser,
-} = require("./Handlers/AccountHandlers");
+} = require("./Handlers/AuthentificationHandlers");
 
 const {
     createParkingLot,
@@ -23,6 +20,10 @@ const {
     getAllParkingLots,
     addAppointment,
 } = require("./Handlers/ParkingLotHandlers");
+
+const {
+    
+} = require("./Handlers/PaymentHandlers");
 
 app.use(morgan("tiny"))
 app.use(express.json())
