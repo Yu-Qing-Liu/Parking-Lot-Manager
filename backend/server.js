@@ -25,6 +25,7 @@ const {
 
 const {
     generateTicket,
+    getTicket,
 } = require("./Handlers/PaymentHandlers");
 
 app.use(morgan("tiny"))
@@ -53,6 +54,7 @@ app.post("/addAppointment/:uid", addAppointment);
 
 //Payment and ticket system endpoints
 app.post("/generateTicket", generateTicket);
+app.get("/getTicket/:uid", getTicket)
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/
