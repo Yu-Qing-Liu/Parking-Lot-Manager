@@ -9,12 +9,18 @@ const client = new MongoClient(MONGO_URI, options);
 const generateTicket = async (req,res) => {
     const ticketId = uuidv4();
     const appointment = req.body.appointment;
+    const price = req.body.price;
+    const ownerId = req.body.userId;
+    const address = req.body.address;
     const db = client.db("Tickets");
     try {
         await client.connect();
         await db.collection("TicketsData").insertOne({
             _id:ticketId,
             ...appointment,
+            address:address,
+            price:price,
+            ownerId:ownerId,
         });
         client.close();
         res.status(200).json({status:"success", uid:ticketId})

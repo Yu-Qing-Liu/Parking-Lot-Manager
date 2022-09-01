@@ -64,6 +64,9 @@ const PaymentForm = ({date,uid,availableDates,appoitments}) => {
                                 },
                                 body: JSON.stringify({
                                     appointment:data.newAppointment,
+                                    address:data.address,
+                                    price:data.price,
+                                    userId:data.userId,
                                 })
                             })
                             .then(res => res.json())

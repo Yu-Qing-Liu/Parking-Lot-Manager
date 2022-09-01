@@ -49,7 +49,6 @@ const createUser = async (req,res) => {
                 country:"Not set yet",
                 parkingLotId:[],
                 balance:0,
-                withdrawableBalance:0,
             });
             client.close();
             res.status(200).json({

@@ -66,6 +66,7 @@ const createParkingLot = async (req,res) => {
         await db2.collection("ParkingLotsData").insertOne(
             {
                 _id:parkingLotId,
+                userId:userId,
                 country:country,
                 city:city,
                 address:address,
@@ -304,7 +305,13 @@ const addAppointment = async (req,res) => {
             {_id:uid},
             {$push: {bookedDates:newAppointment}},
         );
-        res.status(200).json({status:"success", newAppointment});
+        res.status(200).json({
+            status:"success", 
+            newAppointment,
+            address:`${parkingLot.address}, ${parkingLot.city}, ${parkingLot.country}`, 
+            price:parkingLot.price, 
+            userId:parkingLot.userId,
+        });
         client.close();
     } catch (err) {
         client.close();
