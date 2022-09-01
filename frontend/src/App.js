@@ -9,6 +9,8 @@ import { ModalStateContextProvider } from "./ModalStateContext";
 import { useContext, useEffect } from "react";
 import LoadingModal from "./Components/Modals/LoadingModal";
 import ErrorModal from "./Components/Modals/ErrorModal";
+import PaymentApprovalPage from "./Pages/PaymentApprovalPage";
+import TicketSystemPage from "./Pages/TicketSystemPage";
 
 
 const firebaseConfig = {
@@ -67,6 +69,12 @@ const App = () => {
           </Route>
           <Route exact path="/profile/:uid">
             <ProfilePage></ProfilePage>
+          </Route>
+          <Route exact path="/approval">
+            <PaymentApprovalPage></PaymentApprovalPage>
+          </Route>
+          <Route exact path="/ticket/:uid">
+            <TicketSystemPage></TicketSystemPage>
           </Route>
         </Switch>
       </ModalStateContextProvider>

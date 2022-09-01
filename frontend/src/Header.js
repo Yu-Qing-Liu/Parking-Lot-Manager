@@ -34,7 +34,8 @@ const Header = () => {
                 {currentUserData.exists && (
                     <>  
                         <StyledLink to={"/"}>Homepage</StyledLink>
-                        <StyledLink1 to={`/profile/${currentUserData.data.uid}`}>Profile</StyledLink1>
+                        <StyledLink1 to={"/approval"}>Confirm Payment</StyledLink1>
+                        <StyledLink2 to={`/profile/${currentUserData.data.uid}`}>Profile</StyledLink2>
                         <StyledButton onClick={(e) => {
                             e.preventDefault();
                             ShowLoadingModal();
@@ -118,6 +119,20 @@ const StyledLink1 = styled(Link)`
     text-decoration: none;
     border-left: 2px #bbdefb solid;
     border-right: 2px #bbdefb solid;
+`
+
+const StyledLink2 = styled(Link)`
+border-width: 0px;
+background-color: #0d47a1;
+padding-left: 1vw;
+padding-right: 1vw;
+color:white;
+font-weight: bold;
+display: flex;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+border-right: 2px #bbdefb solid;
 `
 
 export default Header;
