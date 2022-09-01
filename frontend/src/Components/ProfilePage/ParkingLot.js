@@ -68,6 +68,70 @@ const ParkingLot = ({parkingLot}) => {
                     }}>
                         Edit
                     </StyledEditButton>
+                    {!parkingLot.disabled ? (
+                        <StyledDisableButton onClick={(e) => {
+                            e.preventDefault();
+                            ShowLoadingModal();
+                            fetch(`/disableParkingLot/${parkingLot._id}`,{
+                                method: 'PATCH',
+                                headers: {
+                                    Accept: "application/json",
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(res => res.json())
+                            .then((data) => {
+                                if(data.status === "success") {
+                                    if(refetchingParkingLots) {
+                                        refetchParkingLots({data:false});
+                                    } else {
+                                        refetchParkingLots({data:true});
+                                    }
+                                    CloseLoadingModal();
+                                } else {
+                                    CloseLoadingModal();
+                                    ShowErrorModal({data:data.error})
+                                }
+                            })
+                            .catch((err) => {
+                                ShowErrorModal({data:err.message})
+                            })
+                        }}>
+                            Disable
+                        </StyledDisableButton>
+                    ) : (
+                        <StyledEnableButton onClick={(e) => {
+                            e.preventDefault();
+                            e.preventDefault();
+                            ShowLoadingModal();
+                            fetch(`/enableParkingLot/${parkingLot._id}`,{
+                                method: 'PATCH',
+                                headers: {
+                                    Accept: "application/json",
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(res => res.json())
+                            .then((data) => {
+                                if(data.status === "success") {
+                                    if(refetchingParkingLots) {
+                                        refetchParkingLots({data:false});
+                                    } else {
+                                        refetchParkingLots({data:true});
+                                    }
+                                    CloseLoadingModal();
+                                } else {
+                                    CloseLoadingModal();
+                                    ShowErrorModal({data:data.error})
+                                }
+                            })
+                            .catch((err) => {
+                                ShowErrorModal({data:err.message})
+                            })
+                        }}>
+                            Enable
+                        </StyledEnableButton>
+                    )}
                     <StyledDeleteButton onClick={(e) => {
                         e.preventDefault();
                         ShowLoadingModal();
@@ -163,6 +227,32 @@ const StyledEditButton = styled.button`
     color:white;
     &:hover {
         background-color:rgb(255,193,7,0.8);
+        cursor: pointer;
+    }
+`
+
+const StyledDisableButton = styled.button`
+    margin-right: 0.5vw;
+    padding: 0.5vh 1vw;
+    border-width: 0;
+    border-radius: 2vh;
+    background-color:rgb(13,71,161);
+    color:white;
+    &:hover {
+        background-color:rgb(13,71,161,0.8);
+        cursor: pointer;
+    }
+`
+
+const StyledEnableButton = styled.button`
+    margin-right: 0.5vw;
+    padding: 0.5vh 1vw;
+    border-width: 0;
+    border-radius: 2vh;
+    background-color:rgb(0,139,2);
+    color:white;
+    &:hover {
+        background-color:rgb(0,139,2,0.8);
         cursor: pointer;
     }
 `

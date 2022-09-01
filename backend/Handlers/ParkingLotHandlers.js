@@ -75,6 +75,7 @@ const createParkingLot = async (req,res) => {
                 days:availableDays,
                 price:price,
                 bookedDates:[],
+                disabled:false,
             }
         )
         // Link the parkingLotId to the user
@@ -202,11 +203,13 @@ const deleteParkingLot = async(req,res) => {
             throw new Error("The parking lot does not exist");
         }
         //Check if the parking lot has pending appointments
-        parkingLot.bookedDates.map((appointment) => {
-            if(moment(appointment.date).isSameOrAfter(today)) {
-                throw new Error("Cannot delete a parking lot with pending appointments. To prevent further customers from creating appointments, disable the parking lot.")
-            }
-        })
+        if(parkingLot.bookedDates.length !== 0) {
+            parkingLot.bookedDates.map((appointment) => {
+                if(moment(appointment.date).isSameOrAfter(today)) {
+                    throw new Error("Cannot delete a parking lot with pending appointments. To prevent further customers from creating appointments, disable the parking lot.")
+                }
+            })
+        }
         //Delete the parking lot
         await db1.collection("ParkingLotsData").deleteOne({_id:uid});
         //Update User's ParkingLot Id's
@@ -221,6 +224,44 @@ const deleteParkingLot = async(req,res) => {
     } catch (err) {
         client.close();
         res.status(400).json({status:"error", error:err.message})
+    }
+}
+
+//Enable parking lot
+const enableParkingLot = async(req,res) => {
+    const uid = req.params.uid;
+    const db = client.db("ParkingLots");
+    try {
+        await client.connect();
+        //Set disabled property to false
+        await db.collection("ParkingLotsData").updateOne(
+            {_id:uid},
+            {$set: {disabled:false}}
+        )
+        res.status(200).json({status:"success"});
+        client.close();
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message});
+    }
+}
+
+//Disable parking lot
+const disableParkingLot = async(req,res) => {
+    const uid = req.params.uid;
+    const db = client.db("ParkingLots");
+    try {
+        await client.connect();
+        //Set disabled property to true
+        await db.collection("ParkingLotsData").updateOne(
+            {_id:uid},
+            {$set: {disabled:true}}
+        )
+        res.status(200).json({status:"success"});
+        client.close();
+    } catch (err) {
+        client.close();
+        res.status(400).json({status:"error", error:err.message});
     }
 }
 
@@ -301,6 +342,8 @@ module.exports = {
     getParkingLots,
     updateParkingLot,
     deleteParkingLot,
+    enableParkingLot,
+    disableParkingLot,
     getAllParkingLots,
     addAppointment,
 }

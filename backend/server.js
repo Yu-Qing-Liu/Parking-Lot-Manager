@@ -17,6 +17,8 @@ const {
     getParkingLots,
     updateParkingLot,
     deleteParkingLot,
+    enableParkingLot,
+    disableParkingLot,
     getAllParkingLots,
     addAppointment,
 } = require("./Handlers/ParkingLotHandlers");
@@ -44,6 +46,8 @@ app.post("/createParkingLot/:uid", createParkingLot);
 app.get("/getParkingLots/:uid", getParkingLots);
 app.patch("/updateParkingLot/:uid", updateParkingLot);
 app.delete("/deleteParkingLot/:uid", deleteParkingLot);
+app.patch("/enableParkingLot/:uid", enableParkingLot);
+app.patch("/disableParkingLot/:uid", disableParkingLot);
 app.get("/getAllParkingLots", getAllParkingLots);
 app.post("/addAppointment/:uid", addAppointment);
 
