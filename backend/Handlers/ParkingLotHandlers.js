@@ -193,6 +193,7 @@ const deleteParkingLot = async(req,res) => {
     const userId = req.body.uid;
     const db1 = client.db("ParkingLots");
     const db2 = client.db("Users");
+    const today = moment();
     try {
         await client.connect();
         //Check if parking lot exists
@@ -200,6 +201,12 @@ const deleteParkingLot = async(req,res) => {
         if(parkingLot === null) {
             throw new Error("The parking lot does not exist");
         }
+        //Check if the parking lot has pending appointments
+        parkingLot.bookedDates.map((appointment) => {
+            if(moment(appointment.date).isSameOrAfter(today)) {
+                throw new Error("Cannot delete a parking lot with pending appointments. To prevent further customers from creating appointments, disable the parking lot.")
+            }
+        })
         //Delete the parking lot
         await db1.collection("ParkingLotsData").deleteOne({_id:uid});
         //Update User's ParkingLot Id's
