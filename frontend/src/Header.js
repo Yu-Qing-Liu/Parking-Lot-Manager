@@ -32,10 +32,9 @@ const Header = () => {
                     </StyledButton>
                 )}
                 {currentUserData.exists && (
-                    <>
-                        <StyledEmail>{`Currently Signed in as: ${currentUserData.data.email}`}</StyledEmail>
-                        <StyledLink to={`/profile/${currentUserData.data.uid}`}>Profile</StyledLink>
-                        <StyledLink1 to={"/"}>Home</StyledLink1>
+                    <>  
+                        <StyledLink to={"/"}>Homepage</StyledLink>
+                        <StyledLink1 to={`/profile/${currentUserData.data.uid}`}>Profile</StyledLink1>
                         <StyledButton onClick={(e) => {
                             e.preventDefault();
                             ShowLoadingModal();
@@ -70,7 +69,7 @@ const StyledHeader = styled.header`
 const StyledTitle = styled.h1`
     margin:0px;
     color:#0d47a1;
-    margin-left: 2vw;
+    margin-left: 1vw;
     margin-top: 1vh;
     margin-bottom: 1vh;
 `
@@ -78,6 +77,7 @@ const StyledTitle = styled.h1`
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
+    border: 2px #bbdefb solid;
 `
 
 const StyledButton = styled.button`
@@ -92,21 +92,9 @@ const StyledButton = styled.button`
     }
 `
 
-const StyledEmail = styled.div`
-    border-width: 0px;
-    background-color: #64b5f6;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    color:white;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
 const StyledLink = styled(Link)`
     border-width: 0px;
-    background-color: #2196f3;
+    background-color: #0d47a1;
     padding-left: 1vw;
     padding-right: 1vw;
     color:white;
@@ -119,7 +107,7 @@ const StyledLink = styled(Link)`
 
 const StyledLink1 = styled(Link)`
     border-width: 0px;
-    background-color: #1976d2;
+    background-color: #0d47a1;
     padding-left: 1vw;
     padding-right: 1vw;
     color:white;
@@ -128,6 +116,8 @@ const StyledLink1 = styled(Link)`
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    border-left: 2px #bbdefb solid;
+    border-right: 2px #bbdefb solid;
 `
 
 export default Header;
