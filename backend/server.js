@@ -24,7 +24,7 @@ const {
 } = require("./Handlers/ParkingLotHandlers");
 
 const {
-    
+    generateTicket,
 } = require("./Handlers/PaymentHandlers");
 
 app.use(morgan("tiny"))
@@ -51,6 +51,8 @@ app.patch("/disableParkingLot/:uid", disableParkingLot);
 app.get("/getAllParkingLots", getAllParkingLots);
 app.post("/addAppointment/:uid", addAppointment);
 
+//Payment and ticket system endpoints
+app.post("/generateTicket", generateTicket);
 
 /*↑↑↑ Endpoints ↑↑↑*/ 
 /*------------------------*/

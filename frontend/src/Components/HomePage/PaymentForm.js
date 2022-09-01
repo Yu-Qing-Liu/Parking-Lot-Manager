@@ -3,8 +3,12 @@ import { ModalStateContext } from "../../ModalStateContext";
 import { useContext } from "react";
 import { GlobalStates } from "../../GlobalStates";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 const PaymentForm = ({date,uid,availableDates,appoitments}) => {
+
+    let history = useHistory();
+    let ticketId = null;
 
     const {
         actions:{updateAllParkingLotsData}
@@ -52,21 +56,45 @@ const PaymentForm = ({date,uid,availableDates,appoitments}) => {
                     .then(res => res.json())
                     .then((data) => {
                         if(data.status === "success") {
-                            fetch("/getAllParkingLots")
-                            .then(res => res.json())
-                            .then((data) => {
+                            fetch("/generateTicket", {
+                                method: 'POST',
+                                headers: {
+                                    Accept: "application/json",
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    appointment:data.newAppointment,
+                                })
+                            })
+                            .then(res => res.json())
+                            .then((data) => {
                                 if(data.status === "success") {
-                                    updateAllParkingLotsData({data:data.parkingLots});
-                                    CloseLoadingModal();
-                                    ClosePaymentModal();
+                                    ticketId = data.uid;
+                                    fetch("/getAllParkingLots")
+                                    .then(res => res.json())
+                                    .then((data) => {
+                                        if(data.status === "success") {
+                                            updateAllParkingLotsData({data:data.parkingLots});
+                                            CloseLoadingModal();
+                                            ClosePaymentModal();
+                                            history.push(`/ticket/${ticketId}`);
+                                        } else {
+                                            CloseLoadingModal();
+                                            ShowErrorModal({data:data.error});
+                                        }
+                                    })
+                                    .catch((err) => {
+                                        CloseLoadingModal();
+                                        ShowErrorModal({data:err.message});
+                                    })
                                 } else {
                                     CloseLoadingModal();
-                                    ShowErrorModal({data:data.error});
+                                    ShowErrorModal({data:data.error})
                                 }
                             })
                             .catch((err) => {
                                 CloseLoadingModal();
-                                ShowErrorModal({data:err.message});
+                                ShowErrorModal({data: err.message})
                             })
                         } else {
                             CloseLoadingModal();

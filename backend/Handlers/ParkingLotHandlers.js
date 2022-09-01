@@ -304,7 +304,7 @@ const addAppointment = async (req,res) => {
             {_id:uid},
             {$push: {bookedDates:newAppointment}},
         );
-        res.status(200).json({status:"success"})
+        res.status(200).json({status:"success", newAppointment});
         client.close();
     } catch (err) {
         client.close();
