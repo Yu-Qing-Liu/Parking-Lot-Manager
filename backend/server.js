@@ -36,8 +36,6 @@ app.use(express.static("public"))
 app.post("/createUser", createUser);
 app.get("/getAllUsers", getAllUsers);
 app.delete("/deleteUser/:uid", deleteUser);
-
-//AccountManagement endpoints
 app.get("/getUser/:uid", getUser);
 app.patch("/updateUser/:uid", updateUser);
 

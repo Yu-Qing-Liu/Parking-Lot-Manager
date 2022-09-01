@@ -173,12 +173,17 @@ const updateUser = async (req,res) => {
 // Deletes a User
 const deleteUser = async (req,res) => {
     const uid = req.params.uid;
+    const db = client.db("Users");
     try {
+        await client.connect();
+        //Verify if user has parking lots
+        const user = await db.collection("UserData").findOne({_id:uid});
+        if(user.parkingLotId.length !== 0) {
+            throw new Error("Sorry, we cannot delete your account at this time, since you still have parking lots that are active, please delete them if you wish to terminate your account!");
+        }
         //Delete a user from firebase by uid
         await admin.auth().deleteUser(uid);
         //Delete the user from mongoDB
-        await client.connect();
-        const db = client.db("Users");
         await db.collection("UserData").deleteOne({_id:uid});
         client.close();
         res.status(200).json({status:"success"});

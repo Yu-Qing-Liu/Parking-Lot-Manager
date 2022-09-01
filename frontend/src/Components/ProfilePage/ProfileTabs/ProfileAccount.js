@@ -159,7 +159,36 @@ const ProfileAccount = () => {
                     >
                     </FormItem>
                 </Container>
-                <SubmitButton type="submit">Submit Changes</SubmitButton>
+                <ButtonContainer>
+                    <SubmitButton type="submit">Submit Changes</SubmitButton>
+                    <DeleteButton type="button" onClick={(e) => {
+                        e.preventDefault();
+                        ShowLoadingModal();
+                        fetch(`/deleteUser/${currentUserData.data.uid}`, {
+                            method: 'DELETE',
+                            headers: {
+                                Accept: "application/json",
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                        .then(res => res.json())
+                        .then((data) => {
+                            if(data.status === "success") {
+                                CloseLoadingModal();
+                            } else {
+                                CloseLoadingModal();
+                                ShowErrorModal({data:data.error});
+                            }
+                        })
+                        .catch((err) => {
+                            CloseLoadingModal();
+                            ShowErrorModal({data:err.message});
+                        })
+                    }}
+                    >
+                        Delete Account
+                    </DeleteButton>
+                </ButtonContainer>
                 <WarningContainer>
                     <WarningIcon></WarningIcon>
                     <Styledh3>The following action will cause your account to log out!</Styledh3>
@@ -212,6 +241,22 @@ const SubmitButton = styled.button`
     }
 `
 
+const DeleteButton = styled.button`
+    margin-top: 4vh;
+    width: 10vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: rgb(183,28,28);
+    color:white;
+    font-weight: bold;
+    border-width: 0;
+    border-radius: 1vw;
+    &:hover{
+        cursor: pointer;
+        background-color: rgb(183,28,28,0.8);
+    }
+`
+
 const WarningContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -231,6 +276,10 @@ const Styledh3 = styled.h3`
     margin-top:2vh;
 `
 
-
+const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`
 
 export default ProfileAccount;
