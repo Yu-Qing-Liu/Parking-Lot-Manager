@@ -83,6 +83,7 @@ const createParkingLot = async (req,res) => {
             {_id:userId},
             {$push: {parkingLotId:parkingLotId}},
         );
+
         res.status(200).json({status:"success"});
         client.close();
     } catch (err) {
@@ -180,7 +181,8 @@ const updateParkingLot = async(req,res) => {
                 {$set: updates[i]}
             )
         }
-        res.status(200).json({status:"success"});
+
+        res.status(200).json({status:"success", parkingLot});
         client.close();
     } catch (err) {
         client.close();
@@ -287,10 +289,17 @@ const addAppointment = async (req,res) => {
     const db = client.db("ParkingLots");
     try {
         await client.connect();
+        // Verify if the parking lot is available
+        const parkingLot = await db.collection("ParkingLotsData").findOne({_id:uid});
+        if(parkingLot.disabled === true) {
+            throw new Error("Cannot book an appointment for this parking Lot, the owner has disabled it");
+        }
+
         let newAppointment = {
             id:appointmentuid,
             date:date
         }
+        // Add an appointment to the parking lot
         await db.collection("ParkingLotsData").updateOne(
             {_id:uid},
             {$push: {bookedDates:newAppointment}},

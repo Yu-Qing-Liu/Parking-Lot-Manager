@@ -62,8 +62,6 @@ const ProfileHome = () => {
             )
         }).flat()
 
-        console.log(dates);
-
         return(
             <>
                 <AccountInformationPanel></AccountInformationPanel>

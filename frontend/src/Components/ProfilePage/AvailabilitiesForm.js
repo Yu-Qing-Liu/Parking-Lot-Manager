@@ -12,7 +12,7 @@ const AvailabilitiesForm = () => {
 
     const {
         state:{profileData,parkingLotDays,currentUserData},
-        actions:{updateParkingLotDays}
+        actions:{updateParkingLotDays,updateAllParkingLotsData}
     } = useContext(GlobalStates);
 
     const {
@@ -42,27 +42,45 @@ const AvailabilitiesForm = () => {
             .then(res => res.json())
             .then((data) => {
                 if(data.status === "success") {
-                    document.getElementById("monday").checked  = false;
-                    document.getElementById("tuesday").checked  = false;
-                    document.getElementById("wednesday").checked  = false;
-                    document.getElementById("thursday").checked  = false;
-                    document.getElementById("friday").checked  = false;
-                    document.getElementById("saturday").checked  = false;
-                    document.getElementById("sunday").checked  = false;
-                    updateParkingLotDays({
-                        monday:false,
-                        tuesday:false,
-                        wednesday:false,
-                        thursday:false,
-                        friday:false,
-                        saturday:false,
-                        sunday:false,
+                    fetch("/getAllParkingLots")
+                    .then(res => res.json())
+                    .then((data) => {
+                        if(data.status === "success") {
+                            updateAllParkingLotsData({data:data.parkingLots});
+                            document.getElementById("monday").checked  = false;
+                            document.getElementById("tuesday").checked  = false;
+                            document.getElementById("wednesday").checked  = false;
+                            document.getElementById("thursday").checked  = false;
+                            document.getElementById("friday").checked  = false;
+                            document.getElementById("saturday").checked  = false;
+                            document.getElementById("sunday").checked  = false;
+                            updateParkingLotDays({
+                                monday:false,
+                                tuesday:false,
+                                wednesday:false,
+                                thursday:false,
+                                friday:false,
+                                saturday:false,
+                                sunday:false,
+                            })
+                            CloseLoadingModal();
+                        } else {
+                            CloseLoadingModal();
+                            ShowErrorModal({data:data.error});
+                        }
                     })
-                    CloseLoadingModal();
+                    .catch((err) => {
+                        CloseLoadingModal();
+                        ShowErrorModal({data:err.message});
+                    })
                 } else {
                     CloseLoadingModal();
                     ShowErrorModal({data:data.error});
                 }
+            })
+            .catch((err) => {
+                CloseLoadingModal();
+                ShowErrorModal({data:err.message});
             })
         }}>
             <StyledTitle>Create a parking lot</StyledTitle>

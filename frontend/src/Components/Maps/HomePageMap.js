@@ -23,23 +23,25 @@ const HomePageMap = () => {
         actions:{ShowPaymentModal},
     } = useContext(ModalStateContext);
 
-    if(allParkingLotsDataHasLoaded) {
+    if(allParkingLotsDataHasLoaded && allParkingLotsData !== undefined) {
 
         let markers = allParkingLotsData.map((parkingLot, index) => {
-            return(
-                <Marker
-                key={`marker-${index}`}
-                scale={0.75}
-                longitude={parkingLot.coords.longitude}
-                latitude={parkingLot.coords.latitude}
-                anchor="bottom"
-                onClick = {(e) => {
-                    e.originalEvent.stopPropagation();
-                    ShowPaymentModal({data:parkingLot});
-                }}
-                >
-                </Marker>
-            )
+            if(!parkingLot.disabled) {
+                return(
+                    <Marker
+                    key={`marker-${index}`}
+                    scale={0.75}
+                    longitude={parkingLot.coords.longitude}
+                    latitude={parkingLot.coords.latitude}
+                    anchor="bottom"
+                    onClick = {(e) => {
+                        e.originalEvent.stopPropagation();
+                        ShowPaymentModal({data:parkingLot});
+                    }}
+                    >
+                    </Marker>
+                )
+            }
         }) 
     
         return(

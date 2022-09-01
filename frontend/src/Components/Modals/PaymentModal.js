@@ -17,7 +17,6 @@ const PaymentModal = () => {
     const [value, setValue] = useState(new Date());
 
     if(PaymentModalData !== null) {
-        console.log(PaymentModalData.bookedDates);
         return(
             <Dialog
             open = {DisplayPaymentModal}
