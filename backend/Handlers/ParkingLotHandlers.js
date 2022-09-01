@@ -92,7 +92,7 @@ const createParkingLot = async (req,res) => {
     }
 }
 
-//Fetches all the parking lots that a user owns
+// Fetches all the parking lots that a user owns
 const getParkingLots = async(req,res) => {
     const uid = req.params.uid;
     const db1 = client.db("Users");
@@ -190,7 +190,7 @@ const updateParkingLot = async(req,res) => {
     }
 }
 
-//Deletes a parking lot by uid
+// Deletes a parking lot by uid
 const deleteParkingLot = async(req,res) => {
     const uid = req.params.uid;
     const userId = req.body.uid;
@@ -207,7 +207,7 @@ const deleteParkingLot = async(req,res) => {
         //Check if the parking lot has pending appointments
         if(parkingLot.bookedDates.length !== 0) {
             parkingLot.bookedDates.map((appointment) => {
-                if(moment(appointment.date).isSameOrAfter(today)) {
+                if(moment(appointment.date).isValid() && moment(appointment.date).isSameOrAfter(today)) {
                     throw new Error("Cannot delete a parking lot with pending appointments. To prevent further customers from creating appointments, disable the parking lot.")
                 }
             })
@@ -229,7 +229,7 @@ const deleteParkingLot = async(req,res) => {
     }
 }
 
-//Enable parking lot
+// Enable parking lot
 const enableParkingLot = async(req,res) => {
     const uid = req.params.uid;
     const db = client.db("ParkingLots");
@@ -248,7 +248,7 @@ const enableParkingLot = async(req,res) => {
     }
 }
 
-//Disable parking lot
+// Disable parking lot
 const disableParkingLot = async(req,res) => {
     const uid = req.params.uid;
     const db = client.db("ParkingLots");
@@ -267,7 +267,7 @@ const disableParkingLot = async(req,res) => {
     }
 }
 
-//Gets a list of all the parking lots with their information
+// Gets a list of all the parking lots with their information
 const getAllParkingLots = async(req,res) => {
     const db = client.db("ParkingLots");
     try {
@@ -281,7 +281,7 @@ const getAllParkingLots = async(req,res) => {
     }
 }
 
-//Adds an appointment to a parking lot
+// Adds an appointment to a parking lot
 const addAppointment = async (req,res) => {
     const uid = req.params.uid;
     const date = req.body.date;
@@ -312,7 +312,7 @@ const addAppointment = async (req,res) => {
     }
 }
 
-//Cron task that clears all appointments that have expired from all parking lots, runs every monday at midnight
+// Cron task that clears all appointments that have expired from all parking lots, runs every monday at midnight
 cron.schedule('0 0 * * 1', async () => {
     const db = client.db("ParkingLots");
     const today = moment();

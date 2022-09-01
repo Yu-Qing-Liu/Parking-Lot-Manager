@@ -174,7 +174,18 @@ const ProfileAccount = () => {
                         .then(res => res.json())
                         .then((data) => {
                             if(data.status === "success") {
-                                CloseLoadingModal();
+                                const auth = getAuth();
+                                signOut(auth)
+                                .then(() => {
+                                    // Sign-out successful.
+                                    CloseLoadingModal();
+                                    history.push("/");
+                                    updateCurrentUserData({data:null,exists:false});
+                                })
+                                .catch((err) => {
+                                    CloseLoadingModal();
+                                    ShowErrorModal({data:err.message});
+                                });
                             } else {
                                 CloseLoadingModal();
                                 ShowErrorModal({data:data.error});
