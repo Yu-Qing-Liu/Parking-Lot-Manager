@@ -140,7 +140,7 @@ const Container = styled.div`
 `
 
 const Styledh1 = styled.h1`
-    margin-left: 1vw;
+    margin-left: 2vw;
 `
 
 const CalendarContainer = styled.div`
