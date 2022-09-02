@@ -83,6 +83,7 @@ const reducer = (state, action) => {
                     city:action.city,
                     postalCode:action.postalCode,
                     country:action.country,
+                    balance:action.balance,
                 },
             }
         }
