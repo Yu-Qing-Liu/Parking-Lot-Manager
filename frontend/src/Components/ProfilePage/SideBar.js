@@ -32,10 +32,10 @@ const SideBar = () => {
                     <StyledCarIcon></StyledCarIcon>
                     <StyledButtonText>Manage Parking Lots</StyledButtonText>
                 </StyledButton>
-                <StyledButton onClick={() => updateProfilePageTab({page:"Balance"})}>
+                <StyledButtonLast onClick={() => updateProfilePageTab({page:"Balance"})}>
                     <StyledBankIcon></StyledBankIcon>
                     <StyledButtonText>Balance</StyledButtonText>
-                </StyledButton>
+                </StyledButtonLast>
             </StyledContainer>
         </StyledSideBar>
     )
@@ -48,18 +48,23 @@ const StyledSideBar = styled.div`
     width: 20vw;
     height:93.4vh;
     box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.2);
+    background: #19354D;
+    background: -moz-linear-gradient(left, #19354D 0%, #2D5D86 100%);
+    background: -webkit-linear-gradient(left, #19354D 0%, #2D5D86 100%);
+    background: linear-gradient(to right, #19354D 0%, #2D5D86 100%);
+    align-items: center;
 `
 
 const StyledContainer = styled.div`
     display: flex;
     flex-direction: column;
-    max-width: 20vw;
-    height:95vh;
-    background-color: rgb(171,184,195,0.1);
+    width: 18vw;
+    margin-top: 7vh;
 `
 
 const StyledButtonText = styled.span`
     font-size: large;
+    color:white;
 `
 
 const StyledButton = styled.button`
@@ -68,15 +73,26 @@ const StyledButton = styled.button`
     align-items: center;
     justify-content: flex-start;
     background-color: transparent;
-    border:none;
-    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.5); 
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.5);
+    border-width: 0;
+    &:hover{
+        background-color: rgb(171,184,195,0.5);
+    }
+`
+
+const StyledButtonLast = styled.button`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: transparent;
+    border-width: 0;
     &:hover{
         background-color: rgb(171,184,195,0.5);
     }
 `
 
 const StyledHomeIcon = styled(ImHome)`
+    color:white;
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
@@ -84,6 +100,7 @@ const StyledHomeIcon = styled(ImHome)`
 `
 
 const StyledAccountIcon = styled(MdAccountBox)`
+    color:white;
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
@@ -91,6 +108,7 @@ const StyledAccountIcon = styled(MdAccountBox)`
 `
 
 const StyledCalendarIcon = styled(IoCalendarSharp)`
+    color:white;
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
@@ -98,6 +116,7 @@ const StyledCalendarIcon = styled(IoCalendarSharp)`
 `
 
 const StyledCarIcon = styled(AiFillCar)`
+    color:white;
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
@@ -105,6 +124,7 @@ const StyledCarIcon = styled(AiFillCar)`
 `
 
 const StyledBankIcon = styled(GiBank)`
+    color:white;
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
