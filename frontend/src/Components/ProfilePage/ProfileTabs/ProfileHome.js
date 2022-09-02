@@ -1,53 +1,21 @@
 import styled from "styled-components";
 import AccountInformationPanel from "../AccountInformationPanel"
 import { GlobalStates } from "../../../GlobalStates";
-import { ModalStateContext } from "../../../ModalStateContext";
 import { useContext } from "react";
-import { useEffect } from "react";
 import Appointment from "../Appointment";
 import { Calendar } from "react-multi-date-picker";
 import { useState } from "react";
 import moment from "moment";
 
+
 const ProfileHome = () => {
 
     const {
-        state:{parkingLotsHasLoaded,parkingLots,currentUserData,refetchingParkingLots},
-        actions:{updateParkingLots,updateAllParkingLotsData},
+        state:{parkingLotsHasLoaded,parkingLots},
     } = useContext(GlobalStates);
-
-    const {
-        actions:{ShowErrorModal,CloseLoadingModal,ShowLoadingModal},
-    } = useContext(ModalStateContext);
 
     const [value, setValue] = useState(new Date());
 
-    useEffect(() => {
-        ShowLoadingModal();
-        fetch(`/getParkingLots/${currentUserData.data.uid}`)
-        .then(res => res.json())
-        .then((data) => {
-            if(data.status === "success") {
-                updateParkingLots({data:data.data});
-                fetch("/getAllParkingLots")
-                .then(res => res.json())
-                .then((data) => {
-                    if(data.status === "success") {
-                        updateAllParkingLotsData({data:data.parkingLots});
-                        CloseLoadingModal();
-                    } else {
-                        CloseLoadingModal();
-                        ShowErrorModal({data:data.error});
-                    }
-                })
-                
-            } else {
-                CloseLoadingModal();
-                ShowErrorModal({data:data.error});
-            }
-        })
-    }, [refetchingParkingLots]);
-    
     if(parkingLotsHasLoaded && parkingLots !== null) {
 
         let appointmentsbyLot = parkingLots.map((parkingLot) => {
@@ -108,6 +76,10 @@ const ProfileHome = () => {
                     </Container>
                 </AppointmentContainer>
             </>
+        )
+    } else {
+        return(
+            <div></div>
         )
     }
     

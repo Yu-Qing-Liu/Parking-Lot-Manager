@@ -20,8 +20,9 @@ const initialState = {
         city:"Not set yet",
         postalCode:"Not set yet",
         country:"Not set yet",
+        balance:0,
     },
-    profilePageTab:"Home",
+    profilePageTab:"Appointments",
     profileAccountButtonsState: {
         emailButton:false,
         phoneNumberButton:false,

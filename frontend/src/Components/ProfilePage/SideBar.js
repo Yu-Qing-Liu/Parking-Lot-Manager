@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {FaHome} from "react-icons/fa";
+import {IoCalendarSharp} from "react-icons/io5";
 import {MdAccountBox} from "react-icons/md";
 import { GlobalStates } from "../../GlobalStates";
 import { useContext } from "react";
@@ -15,9 +15,9 @@ const SideBar = () => {
     return(
         <StyledSideBar>
             <StyledContainer>
-                <StyledButton onClick={() => updateProfilePageTab({page:"Home"})}>
-                    <StyledHomeIcon></StyledHomeIcon>
-                    <StyledButtonText>Home</StyledButtonText>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Appointments"})}>
+                    <StyledAppointmentIcon></StyledAppointmentIcon>
+                    <StyledButtonText>Appointments</StyledButtonText>
                 </StyledButton>
                 <StyledButton onClick={() => updateProfilePageTab({page:"Account"})}>
                     <StyledAccountIcon></StyledAccountIcon>
@@ -71,7 +71,7 @@ const StyledButton = styled.button`
     }
 `
 
-const StyledHomeIcon = styled(FaHome)`
+const StyledAppointmentIcon = styled(IoCalendarSharp)`
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
