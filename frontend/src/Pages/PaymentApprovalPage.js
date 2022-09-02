@@ -1,11 +1,38 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { ModalStateContext } from "../ModalStateContext";
 
-const PaymentApprovalPage = () => {
+const PaymentApprovalPage = () => {
+
+    const {
+        actions:{ShowErrorModal,ShowLoadingModal,CloseLoadingModal}
+    } = useContext(ModalStateContext);
+
     return(
         <Wrapper>
             <Container onSubmit={(e) => {
                 e.preventDefault();
-                
+                ShowLoadingModal();
+                fetch(`/checkoutTicket/${document.getElementById("ticketId").value}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Accept: "application/json",
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(res => res.json())
+                .then((data) => {
+                    if(data.status === "success") {
+                        CloseLoadingModal();
+                    } else {
+                        CloseLoadingModal();
+                        ShowErrorModal({data:data.error})
+                    }
+                })
+                .catch((err) => {
+                    CloseLoadingModal();
+                    ShowErrorModal({data:err.message})
+                })
             }}>
                 <StyledLabel>Ticket ID</StyledLabel>
                 <StyledInput id="ticketId" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"></StyledInput>

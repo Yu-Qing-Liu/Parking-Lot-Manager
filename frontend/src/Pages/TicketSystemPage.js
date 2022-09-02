@@ -188,7 +188,7 @@ const StyledWarningIcon = styled(AiFillWarning)`
     height: 4vh;
 `
 
-const Styledp = styled.p`
+const Styledp = styled.div`
     margin: 0;
     margin-left: 1vw;
     margin-right: 1vw;
