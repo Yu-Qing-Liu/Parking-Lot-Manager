@@ -22,7 +22,7 @@ const initialState = {
         country:"Not set yet",
         balance:0,
     },
-    profilePageTab:"Appointments",
+    profilePageTab:"Home",
     profileAccountButtonsState: {
         emailButton:false,
         phoneNumberButton:false,

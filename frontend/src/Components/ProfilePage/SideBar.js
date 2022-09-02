@@ -3,8 +3,9 @@ import {IoCalendarSharp} from "react-icons/io5";
 import {MdAccountBox} from "react-icons/md";
 import { GlobalStates } from "../../GlobalStates";
 import { useContext } from "react";
-import { ImCalendar } from "react-icons/im"; 
 import { AiFillCar } from "react-icons/ai";
+import { GiBank } from "react-icons/gi";
+import { ImHome } from "react-icons/im";
 
 const SideBar = () => {
 
@@ -15,9 +16,9 @@ const SideBar = () => {
     return(
         <StyledSideBar>
             <StyledContainer>
-                <StyledButton onClick={() => updateProfilePageTab({page:"Appointments"})}>
-                    <StyledAppointmentIcon></StyledAppointmentIcon>
-                    <StyledButtonText>Appointments</StyledButtonText>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Home"})}>
+                    <StyledHomeIcon></StyledHomeIcon>
+                    <StyledButtonText>Home</StyledButtonText>
                 </StyledButton>
                 <StyledButton onClick={() => updateProfilePageTab({page:"Account"})}>
                     <StyledAccountIcon></StyledAccountIcon>
@@ -30,6 +31,10 @@ const SideBar = () => {
                 <StyledButton onClick={() => updateProfilePageTab({page:"Manage Parking Lot"})}>
                     <StyledCarIcon></StyledCarIcon>
                     <StyledButtonText>Manage Parking Lots</StyledButtonText>
+                </StyledButton>
+                <StyledButton onClick={() => updateProfilePageTab({page:"Balance"})}>
+                    <StyledBankIcon></StyledBankIcon>
+                    <StyledButtonText>Balance</StyledButtonText>
                 </StyledButton>
             </StyledContainer>
         </StyledSideBar>
@@ -71,7 +76,7 @@ const StyledButton = styled.button`
     }
 `
 
-const StyledAppointmentIcon = styled(IoCalendarSharp)`
+const StyledHomeIcon = styled(ImHome)`
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
@@ -85,7 +90,7 @@ const StyledAccountIcon = styled(MdAccountBox)`
     height: 4vh;
 `
 
-const StyledCalendarIcon = styled(ImCalendar)`
+const StyledCalendarIcon = styled(IoCalendarSharp)`
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;
@@ -93,6 +98,13 @@ const StyledCalendarIcon = styled(ImCalendar)`
 `
 
 const StyledCarIcon = styled(AiFillCar)`
+    margin:0.7vw;
+    margin-right: 2vw;
+    width: 2vw;
+    height: 4vh;
+`
+
+const StyledBankIcon = styled(GiBank)`
     margin:0.7vw;
     margin-right: 2vw;
     width: 2vw;

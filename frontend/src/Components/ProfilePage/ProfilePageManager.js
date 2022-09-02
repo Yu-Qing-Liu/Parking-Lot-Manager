@@ -7,6 +7,7 @@ import ProfileManageParkingLot from "./ProfileTabs/ProfileManageParkingLot";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { ModalStateContext } from "../../ModalStateContext";
+import ProfileBalance from "./ProfileTabs/ProfileBalance";
 
 const ProfilePageManager = () => {
 
@@ -58,7 +59,7 @@ const ProfilePageManager = () => {
 
 
     switch(profilePageTab) {
-        case "Appointments": {
+        case "Home": {
             return(
                 <ProfileHome></ProfileHome>
             )
@@ -76,6 +77,11 @@ const ProfilePageManager = () => {
         case "Manage Parking Lot": {
             return(
                 <ProfileManageParkingLot></ProfileManageParkingLot>
+            )
+        }
+        case "Balance": {
+            return(
+                <ProfileBalance></ProfileBalance>
             )
         }
     }
