@@ -64,12 +64,15 @@ const StyledHeader = styled.header`
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #bbdefb;
+    background: #4087BF;
+    background: -moz-linear-gradient(top, #4087BF 0%, #79ABD2 50%, #B3CFE5 100%);
+    background: -webkit-linear-gradient(top, #4087BF 0%, #79ABD2 50%, #B3CFE5 100%);
+    background: linear-gradient(to bottom, #4087BF 0%, #79ABD2 50%, #B3CFE5 100%);
 `
 
 const StyledTitle = styled.h1`
     margin:0px;
-    color:#0d47a1;
+    color:white;
     margin-left: 1vw;
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -78,24 +81,24 @@ const StyledTitle = styled.h1`
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
-    border: 2px #bbdefb solid;
 `
 
 const StyledButton = styled.button`
     border-width: 0px;
-    background-color: #0d47a1;
+    background-color: transparent;
     padding-left: 1vw;
     padding-right: 1vw;
     color:white;
     font-weight: bold;
     &:hover {
         cursor: pointer;
+        background-color: rgb(64,135,191,0.5);
     }
 `
 
 const StyledLink = styled(Link)`
     border-width: 0px;
-    background-color: #0d47a1;
+    background-color: transparent;
     padding-left: 1vw;
     padding-right: 1vw;
     color:white;
@@ -104,11 +107,15 @@ const StyledLink = styled(Link)`
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(64,135,191,0.5);
+    }
 `
 
 const StyledLink1 = styled(Link)`
     border-width: 0px;
-    background-color: #0d47a1;
+    background-color: transparent;
     padding-left: 1vw;
     padding-right: 1vw;
     color:white;
@@ -117,22 +124,27 @@ const StyledLink1 = styled(Link)`
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    border-left: 2px #bbdefb solid;
-    border-right: 2px #bbdefb solid;
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(64,135,191,0.5);
+    }
 `
 
 const StyledLink2 = styled(Link)`
-border-width: 0px;
-background-color: #0d47a1;
-padding-left: 1vw;
-padding-right: 1vw;
-color:white;
-font-weight: bold;
-display: flex;
-align-items: center;
-justify-content: center;
-text-decoration: none;
-border-right: 2px #bbdefb solid;
+    border-width: 0px;
+    background-color: transparent;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    color:white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(64,135,191,0.5);
+    }
 `
 
 export default Header;
