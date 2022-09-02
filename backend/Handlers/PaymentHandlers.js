@@ -83,7 +83,51 @@ const checkoutTicket = async (req,res) => {
     }
 }
 
-// Cron task to checkout all tickets past 3 days old
+// Cron task to checkout all tickets past 3 days old, runs every day at 1:00 AM
+cron.schedule('0 1 * * *', async () => {
+    const db1 = client.db("Tickets");
+    const db2 = client.db("Users");
+    const today = moment();
+    const deadline = today.add(3, 'days');
+    try {
+        await client.connect();
+        const tickets = await db.collection("TicketsData").find().toArray();
+        const ticketsToBeCheckedOut = [];
+
+        // Flag tickets for deletion
+        tickets.forEach((ticket) => {
+            if(moment(ticket.date).isBefore(deadline)) {
+                ticketsToBeCheckedOut.push(ticket);
+            }
+        })
+
+        // Pay the owners and delete the tickets
+        for(let i = 0; i < ticketsToBeCheckedOut.length; i++) {
+            // Pay the user
+            let price = ticketsToBeCheckedOut[i].price;
+            let ownerId = ticketsToBeCheckedOut[i].ownerId;
+            let uid = ticketsToBeCheckedOut[i]._id;
+
+            let owner = await db2.collection("UserData").findOne({_id:ownerId});
+            if(owner === null) {
+                throw new Error("Internal error, owner not found, please contact support.");
+            }
+            let balance = parseFloat(owner.balance) + parseFloat(price);
+            await db2.collection("UserData").updateOne(
+                {_id:ownerId},
+                {$set: {balance:balance.toFixed(2)}}
+            )
+            // Delete the ticket
+            await db1.collection("TicketsData").deleteOne({_id:uid});
+        }
+
+        console.log("success");
+        client.close();
+    } catch (err) {
+        client.close();
+        console.log(err);
+    }
+});
 
 module.exports = {
     generateTicket,
