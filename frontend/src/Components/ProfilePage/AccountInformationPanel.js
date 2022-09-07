@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { GlobalStates } from "../../GlobalStates";
 import {MdEmail} from "react-icons/md";
@@ -109,7 +109,6 @@ const Wrapper = styled.div`
     left: 22vw;
     top: 10vh;
     width:20vw;
-    height: 39vh;
     border-radius: 1.5vw;
     background-color: rgb(171,184,195,0.75);
     display: flex;
@@ -120,6 +119,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
     margin-left: 2vw;
     margin-top:2vh;
+    margin-bottom: 2vh;
 `
 
 const InfoContainer = styled.div`

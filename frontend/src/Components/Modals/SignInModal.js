@@ -80,8 +80,8 @@ const StyledTitle = styled.h1`
 `
 
 const Wrapper = styled.div`
-    width: 25vw;
-    height: 54vh;
+    width: 27vw;
+    height: 57vh;
 `
 
 const Container = styled.form`
@@ -89,6 +89,7 @@ const Container = styled.form`
     flex-direction: column;
     align-items: flex-start;
     margin-left: 2vw;
+    margin-right: 2vw;
 `
 
 const StyledLabel = styled.label`
