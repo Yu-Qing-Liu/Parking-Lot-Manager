@@ -75,7 +75,7 @@ const StyledTitle = styled.h1`
     color:white;
     margin-left: 1vw;
     margin-top: 1vh;
-    margin-bottom: 1vh;
+    margin-bottom: 0.40vh;
 `
 
 const ButtonContainer = styled.div`

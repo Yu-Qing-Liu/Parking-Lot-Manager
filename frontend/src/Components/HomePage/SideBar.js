@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {BsSearch} from "react-icons/bs"
 
 const SideBar = () => {
 
@@ -24,7 +23,6 @@ const SideBar = () => {
 }
 
 const StyledSideBar = styled.div`
-    position: absolute;
     display: flex;
     flex-direction: column;
     width: 20vw;

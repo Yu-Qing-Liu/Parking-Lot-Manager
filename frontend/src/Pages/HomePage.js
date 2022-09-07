@@ -27,7 +27,7 @@ const MapContainer = styled.div`
     left: 20vw;
     .mapboxgl-ctrl-geocoder {
         position: absolute;
-        right:64vw;
+        right:63vw;
         z-index: 2;
     }
 `
