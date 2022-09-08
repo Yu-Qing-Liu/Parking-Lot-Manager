@@ -23,6 +23,8 @@ const Header = () => {
         <StyledHeader>
             <StyledTitle>Parking Lot Manager</StyledTitle>
             <ButtonContainer>
+                <StyledLink to={"/"}>Homepage</StyledLink>
+                <StyledLink1 to={"/approval"}>Confirm Payment</StyledLink1>
                 {!currentUserData.exists && (
                     <StyledButton onClick={(e) => {
                         e.preventDefault();
@@ -33,8 +35,6 @@ const Header = () => {
                 )}
                 {currentUserData.exists && (
                     <>  
-                        <StyledLink to={"/"}>Homepage</StyledLink>
-                        <StyledLink1 to={"/approval"}>Confirm Payment</StyledLink1>
                         <StyledLink2 to={`/profile/${currentUserData.data.uid}`}>Profile</StyledLink2>
                         <StyledButton onClick={(e) => {
                             e.preventDefault();
