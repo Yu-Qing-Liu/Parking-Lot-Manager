@@ -183,7 +183,7 @@ const updateParkingLot = async(req,res) => {
             )
         }
 
-        res.status(200).json({status:"success", parkingLot});
+        res.status(200).json({status:"success"});
         client.close();
     } catch (err) {
         client.close();
