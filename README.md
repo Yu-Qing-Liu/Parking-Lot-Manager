@@ -1,4 +1,4 @@
-# Final-Project
+# Parking Lot Manager
 A website for parking lot rentals developped using react and express js
 
 API's: 
